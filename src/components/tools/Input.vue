@@ -1,12 +1,20 @@
 <template>
   <label v-if="label" for="input">{{ label }}</label>
-  <input id="input" :placeholder="placeholder" />
+  <input
+    :value="modelValue"
+    id="input"
+    @input="updateValue"
+    :placeholder="placeholder"
+  />
 </template>
 
 <script>
 export default {
   name: "Input",
   props: {
+    modelValue: {
+      type: String,
+    },
     width: {
       type: String,
       default: "max-content",
@@ -18,6 +26,11 @@ export default {
     placeholder: {
       type: String,
       default: "",
+    },
+  },
+  methods: {
+    updateValue(event) {
+      this.$emit("update:modelValue", event.target.value);
     },
   },
 };
