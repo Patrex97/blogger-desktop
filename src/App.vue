@@ -2,9 +2,12 @@
   <router-view />
 </template>
 
+<script></script>
+
 <style lang="scss">
 $primary: #091f57;
 $primary-light: #26489e;
+$secondary: #63c4e2;
 $white: #edecf5;
 $gray: #afafaf;
 
@@ -33,6 +36,12 @@ $gray: #afafaf;
   background-color: $primary-light;
   &--text {
     color: $primary-light;
+  }
+}
+.secondary {
+  background-color: $secondary;
+  &--text {
+    color: $secondary;
   }
 }
 .white {

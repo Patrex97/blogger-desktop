@@ -44,6 +44,7 @@ import { defineComponent, ref } from "vue";
 import Button from "@/components/tools/Button.vue";
 import Input from "@/components/tools/Input.vue";
 import axios from "axios";
+import router from "@/router";
 
 export default defineComponent({
   name: "Login",
@@ -51,17 +52,19 @@ export default defineComponent({
     const email = ref("test");
     const password = ref("");
 
-    function loginUser() {
-      axios
-        .post("http://localhost:3000/auth/login", {
-          email,
-          password,
-        })
-        .then((response) => {
-          console.log(response.data);
-        });
+    function loginUser(): void {
+      // TODO uncomment when login issues solved
+      // axios
+      //   .post("http://localhost:3000/auth/login", {
+      //     email,
+      //     password,
+      //   })
+      //   .then((response) => {
+      //     console.log(response.data);
+      //   });
+      router.push("/");
     }
-    function registerUser() {
+    function registerUser(): void {
       axios
         .post("http://localhost:3000/user/register", {
           email,
@@ -72,7 +75,7 @@ export default defineComponent({
         });
     }
 
-    function logoutUser() {
+    function logoutUser(): void {
       axios.get("http://localhost:3000/auth/logout").then((response) => {
         console.log(response.data);
       });

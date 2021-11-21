@@ -1,13 +1,16 @@
-<template><div /></template>
+<template>
+  <Navigation />
+  <router-view></router-view>
+</template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import router from "@/router";
+import Navigation from "@/components/Navigation.vue";
 
 export default defineComponent({
   name: "index",
-  setup() {
-    router.push("/login");
+  components: {
+    Navigation,
   },
 });
 </script>
