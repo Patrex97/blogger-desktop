@@ -6,6 +6,8 @@ import axios from "axios";
 import VueAxios from "vue-axios";
 
 const app = createApp(App);
+axios.defaults.withCredentials = true;
+
 app.config.performance = true;
 app.use(store);
 app.use(router);

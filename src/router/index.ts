@@ -3,12 +3,19 @@ import Home from "@/views/index.vue";
 import login from "@/views/login.vue";
 import Posts from "@/views/posts/index.vue";
 import Stats from "@/views/stats/index.vue";
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+import auth from "@/router/middleware/auth.ts";
+import store from "@/store";
 
 const routes: Array<RouteRecordRaw> = [
   {
     path: "/",
     name: "Home",
     component: Home,
+    meta: {
+      middleware: [auth],
+    },
     children: [
       {
         path: "posts",
@@ -41,6 +48,24 @@ const routes: Array<RouteRecordRaw> = [
 const router = createRouter({
   history: createWebHashHistory(),
   routes,
+});
+
+router.beforeEach((to, from, next) => {
+  if (!to.meta.middleware) {
+    return next();
+  }
+  const middleware: any = to.meta.middleware;
+
+  const context = {
+    to,
+    from,
+    next,
+    store,
+  };
+
+  return middleware[0]({
+    ...context,
+  });
 });
 
 export default router;
