@@ -3,9 +3,9 @@
 import Cookie from "js-cookie";
 
 export default function ({ next }: any) {
-  if (!Cookie.get("jwt")) {
+  if (Cookie.get("jwt")) {
     return next({
-      name: "Login",
+      name: "Home",
     });
   }
 

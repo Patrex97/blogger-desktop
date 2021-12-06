@@ -6,7 +6,12 @@ import Stats from "@/views/stats/index.vue";
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import auth from "@/router/middleware/auth.ts";
+import guest from "@/router/middleware/guest.ts";
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+import Cookie from "js-cookie";
 import store from "@/store";
+import axios from "axios";
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -33,6 +38,9 @@ const routes: Array<RouteRecordRaw> = [
     path: "/login",
     name: "Login",
     component: login,
+    meta: {
+      middleware: [guest],
+    },
   },
   // {
   //   path: "/about",
@@ -51,6 +59,9 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
+  if (Cookie.get("jwt") && !store.getters.user) {
+    store.dispatch("fetchUserData");
+  }
   if (!to.meta.middleware) {
     return next();
   }

@@ -1,10 +1,9 @@
 import { createStore } from "vuex";
+import axios from "axios";
 
 export default createStore({
   state: {
-    user: {
-      loggedIn: false,
-    },
+    user: null,
   },
   mutations: {
     setUser(state, payload) {
@@ -12,16 +11,15 @@ export default createStore({
     },
   },
   getters: {
-    getUser(state) {
-      return `User: ${state.user}`;
-    },
-    isAuth(state) {
-      return state.user.loggedIn;
+    user(state) {
+      return state.user;
     },
   },
   actions: {
-    updateUserData({ commit }, data) {
-      commit("setUser", data);
+    async fetchUserData({ commit }) {
+      await axios.get("http://localhost:3000/user/").then((response) => {
+        commit("setUser", response.data);
+      });
     },
   },
   modules: {},
