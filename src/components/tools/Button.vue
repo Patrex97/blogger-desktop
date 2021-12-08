@@ -24,6 +24,7 @@ export default {
   border-radius: 6px;
   padding: 14px;
   width: v-bind(width);
+  cursor: pointer;
   &:focus {
     outline: 1px solid rgba(#26489e, 40%);
   }

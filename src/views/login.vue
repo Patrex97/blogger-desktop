@@ -8,21 +8,14 @@
         <Button
           class="login__button button--primary primary white--text"
           width="341px"
-          @click="loginUser"
+          @click="handleLogin"
         >
           Zaloguj się
-        </Button>
-        <Button
-          class="login__button button--primary primary white--text"
-          width="341px"
-          @click="logoutUser"
-        >
-          Wyloguj się (Test)
         </Button>
       </div>
       <p class="login__register">
         <span class="login__text gray--text">Nie masz konta?</span>
-        <span class="login__link primary--text" @click="registerUser">
+        <span class="login__link primary--text" @click="handleRegistration">
           Zarejestruj się
         </span>
       </p>
@@ -40,46 +33,37 @@
 </template>
 
 <script lang="ts">
+import { createNamespacedHelpers } from "vuex-composition-helpers";
+const { useActions } = createNamespacedHelpers("user");
 import { defineComponent, ref } from "vue";
 import Button from "@/components/tools/Button.vue";
 import Input from "@/components/tools/Input.vue";
-import axios from "axios";
 
 export default defineComponent({
   name: "Login",
   setup() {
-    const email = ref("test");
+    const email = ref("");
     const password = ref("");
 
-    function loginUser(): void {
-      // TODO uncomment when login issues solved
-      axios
-        .post("http://localhost:3000/auth/login", {
-          email: email.value,
-          password: password.value,
-        })
-        .then((response) => {
-          console.log(response.data);
-        });
+    const { login, createUser, logout } = useActions([
+      "login",
+      "createUser",
+      "logout",
+    ]);
+    function handleLogin(): void {
+      login({
+        email: email.value,
+        password: password.value,
+      });
     }
-    function registerUser(): void {
-      axios
-        .post("http://localhost:3000/user/register", {
-          email: email.value,
-          password: password.value,
-        })
-        .then((response) => {
-          console.log(response);
-        });
-    }
-
-    function logoutUser(): void {
-      axios.get("http://localhost:3000/auth/logout").then((response) => {
-        console.log(response.data);
+    function handleRegistration(): void {
+      createUser({
+        email: email.value,
+        password: password.value,
       });
     }
 
-    return { email, password, loginUser, registerUser, logoutUser };
+    return { email, password, handleLogin, handleRegistration, logout };
   },
   components: {
     Button,
@@ -125,6 +109,7 @@ export default defineComponent({
   }
   &__link {
     font-weight: bold;
+    cursor: pointer;
   }
 }
 
