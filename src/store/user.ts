@@ -60,7 +60,7 @@ export const user = {
           password,
         })
         .then((response) => {
-          console.log(response);
+          console.log(response.data);
         })
         .catch((e) => console.error(e));
     },

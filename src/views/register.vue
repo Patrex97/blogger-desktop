@@ -1,25 +1,27 @@
 <template>
   <main class="wrapper">
     <div class="login">
-      <h1 class="login__title primary--text">Zaloguj się</h1>
+      <h1 class="login__title primary--text">Załóż konto</h1>
       <div class="login__form">
         <Input placeholder="Login" width="341px" v-model="email" />
         <Input placeholder="Hasło" width="341px" v-model="password" />
+        <Input
+          placeholder="Potwierdź hasło"
+          width="341px"
+          v-model="passwordRepeat"
+        />
         <Button
           class="login__button button--primary"
           width="341px"
-          @click="handleLogin"
+          @click="handleRegistration"
         >
-          Zaloguj się
+          Załóż konto
         </Button>
       </div>
       <p class="login__register">
-        <span class="login__text gray--text">Nie masz konta?</span>
-        <span
-          class="login__link primary--text"
-          @click="$router.push('/register')"
-        >
-          Zarejestruj się
+        <span class="login__text gray--text">Masz już konto?</span>
+        <span class="login__link primary--text" @click="$router.push('/login')">
+          Zaloguj się
         </span>
       </p>
     </div>
@@ -43,20 +45,25 @@ import Button from "@/components/tools/Button.vue";
 import Input from "@/components/tools/Input.vue";
 
 export default defineComponent({
-  name: "Login",
+  name: "Register",
   setup() {
     const email = ref("");
     const password = ref("");
+    const passwordRepeat = ref("");
 
-    const { login, createUser, logout } = useActions(["login", "logout"]);
-    function handleLogin(): void {
-      login({
-        email: email.value,
-        password: password.value,
-      });
+    const { createUser, logout } = useActions(["createUser"]);
+    function handleRegistration(): void {
+      if (password.value === passwordRepeat.value) {
+        createUser({
+          email: email.value,
+          password: password.value,
+        });
+      } else {
+        console.error("Hasła muszą być takie same");
+      }
     }
 
-    return { email, password, handleLogin, logout };
+    return { email, password, passwordRepeat, handleRegistration };
   },
   components: {
     Button,

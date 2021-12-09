@@ -3,7 +3,8 @@ import Home from "@/views/index.vue";
 import login from "@/views/login.vue";
 import Posts from "@/views/posts/index.vue";
 import Stats from "@/views/stats/index.vue";
-import Blogs from "@/views/blogs.vue";
+import blogs from "@/views/blogs.vue";
+import register from "@/views/register.vue";
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import auth from "@/router/middleware/auth.ts";
@@ -43,9 +44,17 @@ const routes: Array<RouteRecordRaw> = [
     },
   },
   {
+    path: "/register",
+    name: "Register",
+    component: register,
+    meta: {
+      middleware: [guest],
+    },
+  },
+  {
     path: "/blogs",
     name: "Blogs",
-    component: Blogs,
+    component: blogs,
     meta: {
       middleware: [auth],
     },
