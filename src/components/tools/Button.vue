@@ -29,6 +29,8 @@ export default {
     outline: 1px solid rgba(#26489e, 40%);
   }
   &--primary {
+    background-color: #091f57;
+    color: #edecf5;
     &:hover {
       background-color: #26489e;
     }

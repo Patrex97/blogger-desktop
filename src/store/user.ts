@@ -12,15 +12,20 @@ export const user = {
     },
   },
   getters: {
-    user(state: any) {
+    userData(state: any) {
       return state.user;
+    },
+    userBlogs(state: any) {
+      if (state.user) {
+        return state.user?.blogs;
+      }
+      return [];
     },
   },
   actions: {
     fetchUserData({ commit }: any): void {
-      console.log("test");
       axios
-        .get("http://localhost:3000/user/")
+        .get("http://localhost:3000/user/data")
         .then((response) => {
           commit("setUser", response.data);
         })
@@ -35,7 +40,7 @@ export const user = {
         })
         .then((response) => {
           dispatch("fetchUserData");
-          router.push("/");
+          router.push("/blogs");
         })
         .catch((e) => console.error(e));
     },

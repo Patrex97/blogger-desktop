@@ -6,7 +6,7 @@
         <Input placeholder="Login" width="341px" v-model="email" />
         <Input placeholder="Hasło" width="341px" v-model="password" />
         <Button
-          class="login__button button--primary primary white--text"
+          class="login__button button--primary"
           width="341px"
           @click="handleLogin"
         >

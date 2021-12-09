@@ -3,6 +3,7 @@ import Home from "@/views/index.vue";
 import login from "@/views/login.vue";
 import Posts from "@/views/posts/index.vue";
 import Stats from "@/views/stats/index.vue";
+import Blogs from "@/views/blogs.vue";
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import auth from "@/router/middleware/auth.ts";
@@ -11,7 +12,6 @@ import guest from "@/router/middleware/guest.ts";
 // @ts-ignore
 import Cookie from "js-cookie";
 import store from "@/store";
-import axios from "axios";
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -40,6 +40,14 @@ const routes: Array<RouteRecordRaw> = [
     component: login,
     meta: {
       middleware: [guest],
+    },
+  },
+  {
+    path: "/blogs",
+    name: "Blogs",
+    component: Blogs,
+    meta: {
+      middleware: [auth],
     },
   },
   // {
