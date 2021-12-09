@@ -5,15 +5,24 @@
       <router-link to="/" name="Home"> Strona główna </router-link>
       <router-link to="/posts" name="Home"> Posty </router-link>
       <router-link to="/stats" name="Home"> Statystyki </router-link>
+      <span @click="handleLogout">Wyloguj</span>
     </div>
   </nav>
 </template>
 
 <script>
 import { defineComponent } from "vue";
+import store from "@/store";
 
 export default defineComponent({
   name: "Navigation",
+  setup() {
+    function handleLogout() {
+      store.dispatch("user/logout");
+    }
+
+    return { handleLogout };
+  },
 });
 </script>
 

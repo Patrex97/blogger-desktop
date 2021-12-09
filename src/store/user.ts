@@ -49,6 +49,7 @@ export const user = {
         .get("http://localhost:3000/auth/logout")
         .then((response) => {
           commit("setUser", null);
+          router.push("/login");
         })
         .catch((e) => console.error(e));
     },

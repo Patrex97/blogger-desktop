@@ -1,5 +1,6 @@
 <template>
   <div class="blogs__nav">
+    <Button class="nav__button button--primary" @click="logout">Wyloguj</Button>
     <h1 class="nav__title">Moje blogi</h1>
     <Button class="nav__button button--primary">Utwórz blog</Button>
   </div>
@@ -25,13 +26,14 @@ import Badge from "@/components/Badge.vue";
 import Button from "@/components/tools/Button.vue";
 import { defineComponent } from "vue";
 import { createNamespacedHelpers } from "vuex-composition-helpers";
-const { useGetters } = createNamespacedHelpers("user");
+const { useGetters, useActions } = createNamespacedHelpers("user");
 
 export default defineComponent({
   name: "blogs",
   setup() {
     const { userBlogs } = useGetters(["userBlogs"]);
-    return { userBlogs };
+    const { logout } = useActions(["logout"]);
+    return { userBlogs, logout };
   },
   components: {
     Button,
@@ -54,14 +56,6 @@ export default defineComponent({
   }
 }
 .nav {
-  &__title {
-    grid-row: 1 / 2;
-    grid-column: 1 / -1;
-  }
-  &__button {
-    grid-row: 1 / 2;
-    grid-column: 3 / 4;
-  }
 }
 .blog {
   width: 400px;
