@@ -1,18 +1,19 @@
 import { createRouter, createWebHashHistory, RouteRecordRaw } from "vue-router";
-import Home from "@/views/index.vue";
-import login from "@/views/login.vue";
-import Posts from "@/views/posts/index.vue";
-import Stats from "@/views/stats/index.vue";
-import blogs from "@/views/blogs.vue";
-import register from "@/views/register.vue";
+import Home from "../views/index.vue";
+import login from "../views/login.vue";
+import Posts from "../views/posts/index.vue";
+import Stats from "../views/stats/index.vue";
+import blogs from "../views/blogs.vue";
+import register from "../views/register.vue";
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
-import auth from "@/router/middleware/auth.ts";
-import guest from "@/router/middleware/guest.ts";
+import auth from "./middleware/auth.ts";
+// @ts-ignore
+import guest from "./middleware/guest.ts";
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import Cookie from "js-cookie";
-import store from "@/store";
+import store from "../store";
 
 const routes: Array<RouteRecordRaw> = [
   {

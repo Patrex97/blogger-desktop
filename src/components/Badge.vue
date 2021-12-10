@@ -6,12 +6,12 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import { Data } from "@/interfaces";
+import { Data } from "../interfaces";
 
 export default defineComponent({
   name: "Badge",
   setup(props: Data): Data {
-    return { props: Data };
+    return { props };
   },
 });
 </script>

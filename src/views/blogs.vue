@@ -22,8 +22,8 @@
 </template>
 
 <script lang="ts">
-import Badge from "@/components/Badge.vue";
-import Button from "@/components/tools/Button.vue";
+import Badge from "../components/Badge.vue";
+import Button from "../components/tools/Button.vue";
 import { defineComponent } from "vue";
 import { createNamespacedHelpers } from "vuex-composition-helpers";
 const { useGetters, useActions } = createNamespacedHelpers("user");

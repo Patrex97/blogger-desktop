@@ -30,7 +30,7 @@
           Twój uniwersalny program do tworzenia własnego bloga
         </p>
       </div>
-      <img src="@/assets/login-image.png" alt="" class="wallpaper__image" />
+      <img src="../assets/login-image.png" alt="" class="wallpaper__image" />
     </div>
   </main>
 </template>
@@ -39,8 +39,8 @@
 import { createNamespacedHelpers } from "vuex-composition-helpers";
 const { useActions } = createNamespacedHelpers("user");
 import { defineComponent, ref } from "vue";
-import Button from "@/components/tools/Button.vue";
-import Input from "@/components/tools/Input.vue";
+import Button from "../components/tools/Button.vue";
+import Input from "../components/tools/Input.vue";
 
 export default defineComponent({
   name: "Login",
