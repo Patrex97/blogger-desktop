@@ -5,10 +5,14 @@ export const user = {
   namespaced: true,
   state: {
     user: null,
+    token: null,
   },
   mutations: {
     setUser(state: any, payload: any) {
       state.user = payload;
+    },
+    setToken(state: any, payload: string) {
+      state.token = payload;
     },
   },
   getters: {
@@ -21,6 +25,9 @@ export const user = {
       }
       return [];
     },
+    getToken(state: any) {
+      return state.token;
+    },
   },
   actions: {
     fetchUserData({ commit }: any): void {
@@ -31,7 +38,7 @@ export const user = {
         })
         .catch((e) => console.error(e));
     },
-    login({ dispatch }: any, loginData: any): void {
+    login({ dispatch, commit }: any, loginData: any): void {
       const { email, password } = loginData;
       axios
         .post("http://localhost:3000/auth/login", {
@@ -40,7 +47,8 @@ export const user = {
         })
         .then((response) => {
           dispatch("fetchUserData");
-          router.push("/blogs");
+          commit("setToken", response.data.token);
+          router.push("/");
         })
         .catch((e) => console.error(e));
     },
@@ -49,6 +57,7 @@ export const user = {
         .get("http://localhost:3000/auth/logout")
         .then((response) => {
           commit("setUser", null);
+          commit("setToken", null);
           router.push("/login");
         })
         .catch((e) => console.error(e));

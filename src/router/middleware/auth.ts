@@ -4,7 +4,7 @@ import Cookie from "js-cookie";
 import store from "../../store";
 
 export default function ({ next }: any) {
-  if (!Cookie.get("jwt")) {
+  if (!store.getters["user/getToken"]) {
     return next({
       name: "Login",
     });

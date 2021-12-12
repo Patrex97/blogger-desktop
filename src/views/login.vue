@@ -47,8 +47,7 @@ export default defineComponent({
   setup() {
     const email = ref("");
     const password = ref("");
-
-    const { login, createUser, logout } = useActions(["login", "logout"]);
+    const { login } = useActions(["login"]);
     function handleLogin(): void {
       login({
         email: email.value,
@@ -56,7 +55,7 @@ export default defineComponent({
       });
     }
 
-    return { email, password, handleLogin, logout };
+    return { email, password, handleLogin };
   },
   components: {
     Button,

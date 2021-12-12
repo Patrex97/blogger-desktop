@@ -77,7 +77,7 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  if (Cookie.get("jwt") && !store.getters.user) {
+  if (store.getters["user/getToken"] && !store.getters["user/userData"]) {
     store.dispatch("fetchUserData");
   }
   if (!to.meta.middleware) {
