@@ -8,7 +8,7 @@
     <router-link
       v-for="blog in userBlogs"
       :key="blog.id"
-      :to="`/blog/${blog.id}`"
+      :to="`/${blog.id}/create`"
       class="blog primary white--text"
     >
       <h2 class="blog__name">{{ blog.name }}</h2>

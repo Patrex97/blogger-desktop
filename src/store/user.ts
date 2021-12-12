@@ -48,7 +48,7 @@ export const user = {
         .then((response) => {
           dispatch("fetchUserData");
           commit("setToken", response.data.token);
-          router.push("/");
+          router.push("/blogs");
         })
         .catch((e) => console.error(e));
     },
