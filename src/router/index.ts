@@ -1,7 +1,6 @@
 import { createRouter, createWebHashHistory, RouteRecordRaw } from "vue-router";
 import Home from "../views/index.vue";
 import login from "../views/login.vue";
-import Stats from "../views/stats/index.vue";
 import BlogCreate from "../views/blog/create.vue";
 import blogs from "../views/blogs.vue";
 import register from "../views/register.vue";
@@ -22,16 +21,16 @@ const routes: Array<RouteRecordRaw> = [
     },
     children: [
       {
-        path: "create",
+        path: "",
         name: "Create",
         component: BlogCreate,
       },
-      {
-        path: "stats",
-        name: "Stats",
-        component: Stats,
-      },
     ],
+  },
+  {
+    path: "/create",
+    name: "Create",
+    component: BlogCreate,
   },
   {
     path: "/login",

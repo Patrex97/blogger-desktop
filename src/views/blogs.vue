@@ -2,13 +2,15 @@
   <div class="blogs__nav">
     <Button class="nav__button button--primary" @click="logout">Wyloguj</Button>
     <h1 class="nav__title">Moje blogi</h1>
-    <Button class="nav__button button--primary">Utwórz blog</Button>
+    <Button class="nav__button button--primary" @click="openDialog = true">
+      Utwórz blog
+    </Button>
   </div>
   <section class="blogs">
     <router-link
       v-for="blog in userBlogs"
       :key="blog.id"
-      :to="`/${blog.id}/create`"
+      :to="`/${blog.id}`"
       class="blog primary white--text"
     >
       <h2 class="blog__name">{{ blog.name }}</h2>
@@ -19,25 +21,29 @@
       </div>
     </router-link>
   </section>
+  <Dialog :open="openDialog" @closeDialog="openDialog = false" />
 </template>
 
 <script lang="ts">
 import Badge from "../components/Badge.vue";
 import Button from "../components/tools/Button.vue";
-import { defineComponent } from "vue";
+import Dialog from "../components/Dialog.vue";
+import { defineComponent, ref } from "vue";
 import { createNamespacedHelpers } from "vuex-composition-helpers";
 const { useGetters, useActions } = createNamespacedHelpers("user");
 
 export default defineComponent({
-  name: "blogs",
-  setup() {
-    const { userBlogs } = useGetters(["userBlogs"]);
-    const { logout } = useActions(["logout"]);
-    return { userBlogs, logout };
-  },
+  name: "Blogs",
   components: {
     Button,
     Badge,
+    Dialog,
+  },
+  setup() {
+    const { userBlogs } = useGetters(["userBlogs"]);
+    const { logout } = useActions(["logout"]);
+    const openDialog = ref(false);
+    return { userBlogs, logout, openDialog };
   },
 });
 </script>

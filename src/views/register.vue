@@ -50,8 +50,8 @@ export default defineComponent({
     const email = ref("");
     const password = ref("");
     const passwordRepeat = ref("");
+    const { createUser } = useActions(["createUser"]);
 
-    const { createUser, logout } = useActions(["createUser"]);
     function handleRegistration(): void {
       if (password.value === passwordRepeat.value) {
         createUser({

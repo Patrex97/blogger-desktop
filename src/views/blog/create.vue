@@ -2,10 +2,12 @@
   <div>{{ $route.params.id }}</div>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import { defineComponent } from "vue";
+
+export default defineComponent({
   name: "create",
-};
+});
 </script>
 
 <style scoped></style>
