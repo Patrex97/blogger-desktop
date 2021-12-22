@@ -55,6 +55,11 @@ export default defineComponent({
   }
   &__content {
     width: 100%;
+    ::v-deep {
+      > *:not(:last-child) {
+        margin-bottom: 1.25rem;
+      }
+    }
   }
   &__buttons {
     display: grid;
