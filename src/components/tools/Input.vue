@@ -1,10 +1,12 @@
 <template>
-  <label v-if="label" for="input">{{ label }}</label>
+  <label v-if="label" :for="label">{{ label }}</label>
   <input
     :value="modelValue"
-    id="input"
-    @input="updateValue"
+    :id="label"
+    v-bind="$attrs"
+    @input="$emit('update:modelValue', $event.target.value)"
     :placeholder="placeholder"
+    class="form-input"
   />
 </template>
 
@@ -19,6 +21,10 @@ export default {
       type: String,
       default: "max-content",
     },
+    height: {
+      type: String,
+      default: "50px",
+    },
     label: {
       type: String,
       default: "",
@@ -28,21 +34,16 @@ export default {
       default: "",
     },
   },
-  methods: {
-    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-    updateValue(event) {
-      this.$emit("update:modelValue", event.target.value);
-    },
-  },
 };
 </script>
 
 <style lang="scss" scoped>
-#input {
+.form-input {
   padding: 14px;
   border-radius: 6px;
   border: 1px solid #d0d0d0;
   width: v-bind(width);
+  height: v-bind(height);
   font-size: 1.125rem;
   &::placeholder {
     color: #afafaf;
