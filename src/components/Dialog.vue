@@ -2,9 +2,17 @@
   <div
     class="overlay"
     :class="{ 'overlay--active': open }"
-    @click="$emit('closeDialog')"
+    @click="$emit('update:open', false)"
   />
-  <div class="dialog" :class="{ 'dialog--active': open }">test</div>
+  <div class="dialog" :class="{ 'dialog--active': open }">
+    <h2>{{ title }}</h2>
+    <div class="dialog__content">
+      <slot />
+    </div>
+    <div class="dialog__buttons">
+      <slot name="buttons" />
+    </div>
+  </div>
 </template>
 
 <script lang="ts">
@@ -15,6 +23,7 @@ export default defineComponent({
   name: "Dialog",
   props: {
     open: Boolean,
+    title: String,
   },
   emits: ["closeDialog"],
   setup(props: Data) {
@@ -40,7 +49,23 @@ export default defineComponent({
   background-color: #fff;
   padding: 20px;
   &--active {
-    display: block;
+    display: grid;
+    grid-template-rows: max-content 1fr max-content;
+    gap: 1.5rem;
+  }
+  &__content {
+    width: 100%;
+  }
+  &__buttons {
+    display: grid;
+    grid-template-rows: max-content;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+    ::v-deep {
+      .button {
+        width: 100% !important;
+      }
+    }
   }
 }
 .overlay {
