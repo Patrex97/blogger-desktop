@@ -23,6 +23,10 @@ export default defineComponent({
   props: {
     open: Boolean,
     title: String,
+    width: {
+      type: String,
+      default: "max-content",
+    },
   },
   emits: ["closeDialog"],
 });
@@ -38,7 +42,7 @@ export default defineComponent({
   z-index: 10;
   min-width: 400px;
   min-height: 300px;
-  width: max-content;
+  width: v-bind(width);
   height: max-content;
   border-radius: 16px;
   box-shadow: rgba(100, 100, 111, 0.2) 0 7px 29px 0;

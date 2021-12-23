@@ -24,9 +24,10 @@
       </div>
     </router-link>
   </section>
-  <Dialog v-model:open="newBlogDialog.isOpen" title="Nowy blog">
+  <Dialog v-model:open="newBlogDialog.isOpen" title="Nowy blog" width="250px">
     <Step1 v-if="newBlogDialog.currentStep === 1" v-model="newBlog.name" />
     <Step2 v-if="newBlogDialog.currentStep === 2" v-model="newBlog.url" />
+    <Step3 v-if="newBlogDialog.currentStep === 3" v-model="newBlog.tags" />
     <template v-slot:buttons>
       <Button
         v-if="newBlogDialog.currentStep === 1"
@@ -68,6 +69,7 @@ import { defineComponent, reactive, watch } from "vue";
 import { createNamespacedHelpers } from "vuex-composition-helpers";
 import Step1 from "../components/dialogs/newBlog/Step1.vue";
 import Step2 from "../components/dialogs/newBlog/Step2.vue";
+import Step3 from "../components/dialogs/newBlog/Step3.vue";
 const { useGetters, useActions } = createNamespacedHelpers("user");
 
 export default defineComponent({
@@ -75,6 +77,7 @@ export default defineComponent({
   components: {
     Step1,
     Step2,
+    Step3,
     Button,
     Badge,
     Dialog,
