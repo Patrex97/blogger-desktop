@@ -2,7 +2,10 @@
   <div class="blogs__nav">
     <Button class="nav__button button--primary" @click="logout">Wyloguj</Button>
     <h1 class="nav__title">Moje blogi</h1>
-    <Button class="nav__button button--primary" @click="openDialog = true">
+    <Button
+      class="nav__button button--primary"
+      @click="newBlogDialog.isOpen = true"
+    >
       Utwórz blog
     </Button>
   </div>
@@ -21,14 +24,38 @@
       </div>
     </router-link>
   </section>
-  <Dialog v-model:open="openDialog" title="Nowy blog">
-    <Step1 v-if="currentStep === 1" v-model="newBlog.name" />
-    <Step2 v-if="currentStep === 2" v-model="newBlog.url" />
+  <Dialog v-model:open="newBlogDialog.isOpen" title="Nowy blog">
+    <Step1 v-if="newBlogDialog.currentStep === 1" v-model="newBlog.name" />
+    <Step2 v-if="newBlogDialog.currentStep === 2" v-model="newBlog.url" />
     <template v-slot:buttons>
-      <Button class="button--primary" @click="openDialog = false">
+      <Button
+        v-if="newBlogDialog.currentStep === 1"
+        class="button--primary"
+        @click="newBlogDialog.isOpen = false"
+      >
         Zamknij
       </Button>
-      <Button class="button--primary" @click="currentStep++">Dalej</Button>
+      <Button
+        v-if="newBlogDialog.currentStep > 1"
+        class="button--primary"
+        @click="newBlogDialog.currentStep--"
+      >
+        Wróć
+      </Button>
+      <Button
+        v-if="newBlogDialog.currentStep < 4"
+        class="button--primary"
+        @click="newBlogDialog.currentStep++"
+      >
+        Dalej
+      </Button>
+      <Button
+        v-if="newBlogDialog.currentStep === 4"
+        class="button--primary"
+        @click="newBlogDialog.isOpen = false"
+      >
+        Zakończ
+      </Button>
     </template>
   </Dialog>
 </template>
@@ -37,7 +64,7 @@
 import Badge from "../components/Badge.vue";
 import Button from "../components/tools/Button.vue";
 import Dialog from "../components/Dialog.vue";
-import { defineComponent, ref, reactive } from "vue";
+import { defineComponent, reactive, watch } from "vue";
 import { createNamespacedHelpers } from "vuex-composition-helpers";
 import Step1 from "../components/dialogs/newBlog/Step1.vue";
 import Step2 from "../components/dialogs/newBlog/Step2.vue";
@@ -53,20 +80,27 @@ export default defineComponent({
     Dialog,
   },
   setup() {
-    let openDialog = ref(false);
-    let currentStep = ref(1);
+    const { userBlogs } = useGetters(["userBlogs"]);
+    const { logout } = useActions(["logout"]);
+    let newBlogDialog = reactive({
+      isOpen: false,
+      currentStep: 1,
+    });
+
     let newBlog = reactive({
       name: "",
       url: "",
       tags: [],
     });
 
-    const { userBlogs } = useGetters(["userBlogs"]);
-    const { logout } = useActions(["logout"]);
+    watch(newBlogDialog, (newValue) => {
+      if (!newValue.isOpen) {
+        newBlogDialog.currentStep = 1;
+      }
+    });
 
     return {
-      openDialog,
-      currentStep,
+      newBlogDialog,
       newBlog,
       userBlogs,
       logout,

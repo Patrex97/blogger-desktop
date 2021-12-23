@@ -17,7 +17,6 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import { Data } from "../interfaces";
 
 export default defineComponent({
   name: "Dialog",
@@ -26,9 +25,6 @@ export default defineComponent({
     title: String,
   },
   emits: ["closeDialog"],
-  setup(props: Data) {
-    console.log(props.open);
-  },
 });
 </script>
 
