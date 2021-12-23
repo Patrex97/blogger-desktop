@@ -46,7 +46,6 @@ export default {
   methods: {
     selectTag(tag) {
       const tagIndex = this.tags.indexOf(tag);
-      console.log(tagIndex);
       if (tag.selected) {
         this.tags[tagIndex] = {
           ...tag,

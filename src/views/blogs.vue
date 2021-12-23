@@ -54,7 +54,7 @@
       <Button
         v-if="newBlogDialog.currentStep === 4"
         class="button--primary"
-        @click="newBlogDialog.isOpen = false"
+        @click="createNewBlog"
       >
         Utwórz
       </Button>
@@ -72,7 +72,9 @@ import Step1 from "../components/dialogs/newBlog/Step1.vue";
 import Step2 from "../components/dialogs/newBlog/Step2.vue";
 import Step3 from "../components/dialogs/newBlog/Step3.vue";
 import Step4 from "../components/dialogs/newBlog/Step4.vue";
-const { useGetters, useActions } = createNamespacedHelpers("user");
+const { useGetters: userGetters, useActions: userActions } =
+  createNamespacedHelpers("user");
+const { useActions: blogActions } = createNamespacedHelpers("blog");
 
 export default defineComponent({
   name: "Blogs",
@@ -86,8 +88,9 @@ export default defineComponent({
     Dialog,
   },
   setup() {
-    const { userBlogs } = useGetters(["userBlogs"]);
-    const { logout } = useActions(["logout"]);
+    const { userBlogs } = userGetters(["userBlogs"]);
+    const { logout } = userActions(["logout"]);
+    const { createBlog } = blogActions(["createBlog"]);
     let newBlogDialog = reactive({
       isOpen: false,
       currentStep: 1,
@@ -105,11 +108,17 @@ export default defineComponent({
       }
     });
 
+    const createNewBlog = async function () {
+      await createBlog(newBlog);
+      newBlogDialog.isOpen = false;
+    };
+
     return {
       newBlogDialog,
       newBlog,
       userBlogs,
       logout,
+      createNewBlog,
     };
   },
 });
@@ -137,6 +146,7 @@ export default defineComponent({
   }
   &__tags {
     display: flex;
+    flex-wrap: wrap;
     justify-content: center;
     align-items: center;
     gap: 0.5rem;
