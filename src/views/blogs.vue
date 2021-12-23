@@ -28,6 +28,7 @@
     <Step1 v-if="newBlogDialog.currentStep === 1" v-model="newBlog.name" />
     <Step2 v-if="newBlogDialog.currentStep === 2" v-model="newBlog.url" />
     <Step3 v-if="newBlogDialog.currentStep === 3" v-model="newBlog.tags" />
+    <Step4 v-if="newBlogDialog.currentStep === 4" :new-blog="newBlog" />
     <template v-slot:buttons>
       <Button
         v-if="newBlogDialog.currentStep === 1"
@@ -55,7 +56,7 @@
         class="button--primary"
         @click="newBlogDialog.isOpen = false"
       >
-        Zakończ
+        Utwórz
       </Button>
     </template>
   </Dialog>
@@ -70,6 +71,7 @@ import { createNamespacedHelpers } from "vuex-composition-helpers";
 import Step1 from "../components/dialogs/newBlog/Step1.vue";
 import Step2 from "../components/dialogs/newBlog/Step2.vue";
 import Step3 from "../components/dialogs/newBlog/Step3.vue";
+import Step4 from "../components/dialogs/newBlog/Step4.vue";
 const { useGetters, useActions } = createNamespacedHelpers("user");
 
 export default defineComponent({
@@ -78,6 +80,7 @@ export default defineComponent({
     Step1,
     Step2,
     Step3,
+    Step4,
     Button,
     Badge,
     Dialog,

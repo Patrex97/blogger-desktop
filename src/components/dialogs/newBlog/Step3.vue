@@ -18,7 +18,7 @@ import Badge from "../../Badge.vue";
 import axios from "axios";
 
 export default {
-  name: "Blog-step-1",
+  name: "Blog-step-3",
   components: {
     Badge,
   },
