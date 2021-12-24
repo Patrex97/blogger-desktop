@@ -1,7 +1,7 @@
 import { createRouter, createWebHashHistory, RouteRecordRaw } from "vue-router";
 import Home from "../views/index.vue";
 import login from "../views/login.vue";
-import BlogCreate from "../views/blog/create.vue";
+import BlogDashboard from "../views/blog/dashboard.vue";
 import blogs from "../views/blogs.vue";
 import register from "../views/register.vue";
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -22,15 +22,10 @@ const routes: Array<RouteRecordRaw> = [
     children: [
       {
         path: "",
-        name: "Create",
-        component: BlogCreate,
+        name: "Dashboard",
+        component: BlogDashboard,
       },
     ],
-  },
-  {
-    path: "/create",
-    name: "Create",
-    component: BlogCreate,
   },
   {
     path: "/login",

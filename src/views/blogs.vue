@@ -114,11 +114,6 @@ export default defineComponent({
     watch(newBlogDialog, (newValue) => {
       if (!newValue.isOpen) {
         newBlogDialog.currentStep = 1;
-        newBlog = {
-          name: "",
-          url: "",
-          tags: [],
-        };
       }
     });
 
