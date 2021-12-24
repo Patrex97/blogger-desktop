@@ -23,6 +23,15 @@
         </Badge>
       </div>
     </router-link>
+    <template v-if="!userBlogs.length">
+      <p>Nie masz żadnych blogów</p>
+      <Button
+        class="nav__button button--primary"
+        @click="newBlogDialog.isOpen = true"
+      >
+        Utwórz pierwszy blog
+      </Button>
+    </template>
   </section>
   <Dialog v-model:open="newBlogDialog.isOpen" title="Nowy blog" width="250px">
     <Step1 v-if="newBlogDialog.currentStep === 1" v-model="newBlog.name" />
@@ -105,6 +114,11 @@ export default defineComponent({
     watch(newBlogDialog, (newValue) => {
       if (!newValue.isOpen) {
         newBlogDialog.currentStep = 1;
+        newBlog = {
+          name: "",
+          url: "",
+          tags: [],
+        };
       }
     });
 

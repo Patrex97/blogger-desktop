@@ -71,6 +71,10 @@ export default {
     gap: 0.75rem;
   }
   &__badge {
+    cursor: pointer;
+    &:hover {
+      background-color: #26489e;
+    }
   }
 }
 </style>
