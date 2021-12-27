@@ -40,5 +40,17 @@ export const blog = {
         })
         .catch((e) => console.error(e));
     },
+    createPost(_: any, newPostData: any) {
+      const { title, content } = newPostData;
+      axios
+        .post("http://localhost:3000/blog/create", {
+          title,
+          content,
+        })
+        .then((response) => {
+          console.log(response.data);
+        })
+        .catch((e) => console.error(e));
+    },
   },
 };

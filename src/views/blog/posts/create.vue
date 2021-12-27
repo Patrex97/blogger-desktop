@@ -1,7 +1,7 @@
 <template>
   <div>
     <h2 class="create-post__title">Nowy post</h2>
-    <form class="create-post__form" @submit.prevent="createPost">
+    <form class="create-post__form" @submit.prevent="addNewPost">
       <Input v-model="newPost.title" label="Tytuł posta" width="100%" />
       <Textarea
         v-model="newPost.content"
@@ -19,6 +19,7 @@ import { defineComponent } from "vue";
 import Input from "../../../components/tools/Input.vue";
 import Textarea from "../../../components/tools/Textarea.vue";
 import Button from "../../../components/tools/Button.vue";
+import { mapActions } from "vuex";
 
 export default defineComponent({
   name: "create",
@@ -36,8 +37,9 @@ export default defineComponent({
     };
   },
   methods: {
-    createPost() {
-      console.log("Post created");
+    ...mapActions("blog", ["createPost"]),
+    addNewPost() {
+      this.createPost(this.newPost);
     },
   },
 });
