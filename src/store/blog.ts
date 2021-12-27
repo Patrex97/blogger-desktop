@@ -1,11 +1,23 @@
 import axios from "axios";
-import router from "../router";
 
 export const blog = {
   namespaced: true,
-  state: {},
-  mutations: {},
-  getters: {},
+  state: {
+    blog: {},
+  },
+  mutations: {
+    setBlog(state: any, payload: any): void {
+      state.blog = payload;
+    },
+  },
+  getters: {
+    blogData(state: any): any {
+      return state.blog;
+    },
+    posts(state: any): any {
+      return state.blog.posts;
+    },
+  },
   actions: {
     createBlog({ dispatch }: any, newBlogData: any) {
       const { name, title, tags } = newBlogData;
@@ -17,6 +29,14 @@ export const blog = {
         })
         .then((response) => {
           dispatch("user/fetchUserData", null, { root: true });
+        })
+        .catch((e) => console.error(e));
+    },
+    fetchBlogData({ commit }: any, id: any) {
+      axios
+        .get(`http://localhost:3000/blog/${id}`)
+        .then((response) => {
+          commit("setBlog", response.data);
         })
         .catch((e) => console.error(e));
     },

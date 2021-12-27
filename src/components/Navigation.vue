@@ -7,23 +7,26 @@
     <div class="nav__links">
       <router-link to="/" name="Home"> Strona główna </router-link>
       <router-link to="/posts" name="Home"> Posty </router-link>
-      <h1 class="nav__title">Nazwa mojego bloga</h1>
+      <h1 class="nav__title">{{ blogData?.name }}</h1>
     </div>
   </nav>
 </template>
 
 <script>
-import { defineComponent } from "vue";
+import { defineComponent, reactive } from "vue";
 import store from "../store";
+import { createNamespacedHelpers } from "vuex-composition-helpers";
+const { useGetters } = createNamespacedHelpers("blog");
 
 export default defineComponent({
   name: "Navigation",
   setup() {
+    const { blogData } = useGetters(["blogData"]);
     function handleLogout() {
       store.dispatch("user/logout");
     }
 
-    return { handleLogout };
+    return { blogData, handleLogout };
   },
 });
 </script>
