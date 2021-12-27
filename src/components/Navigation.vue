@@ -5,8 +5,12 @@
       <router-link to="/blogs" name="Home"> Moje blogi </router-link>
     </div>
     <div class="nav__links">
-      <router-link to="/" name="Home"> Strona główna </router-link>
-      <router-link to="/posts" name="Home"> Posty </router-link>
+      <router-link :to="`/${$route.params.id}`" name="Home">
+        Strona główna
+      </router-link>
+      <router-link :to="`/${$route.params.id}/posts`" name="Home">
+        Posty
+      </router-link>
       <h1 class="nav__title">{{ blogData?.name }}</h1>
     </div>
   </nav>
@@ -38,6 +42,7 @@ export default defineComponent({
   align-items: center;
   padding: 0 2rem;
   box-shadow: rgba(0, 0, 0, 0.1) 0 4px 12px;
+  margin-bottom: 4rem;
   &__links {
     padding: 10px 0;
     display: grid;
