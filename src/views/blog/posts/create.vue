@@ -9,6 +9,7 @@
         width="100%"
         :rows="10"
       />
+      <File />
       <Button type="submit" class="button--primary">Utwórz post</Button>
     </form>
   </div>
@@ -16,9 +17,10 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import Input from "../../../components/tools/Input.vue";
-import Textarea from "../../../components/tools/Textarea.vue";
-import Button from "../../../components/tools/Button.vue";
+import Input from "@/components/tools/Input.vue";
+import Textarea from "@/components/tools/Textarea.vue";
+import File from "@/components/tools/File.vue";
+import Button from "@/components/tools/Button.vue";
 import { mapActions } from "vuex";
 
 export default defineComponent({
@@ -26,6 +28,7 @@ export default defineComponent({
   components: {
     Button,
     Input,
+    File,
     Textarea,
   },
   data() {

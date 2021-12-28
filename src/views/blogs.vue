@@ -72,15 +72,15 @@
 </template>
 
 <script lang="ts">
-import Badge from "../components/Badge.vue";
-import Button from "../components/tools/Button.vue";
-import Dialog from "../components/Dialog.vue";
+import Badge from "@/components/Badge.vue";
+import Button from "@/components/tools/Button.vue";
+import Dialog from "@/components/Dialog.vue";
 import { defineComponent, reactive, watch } from "vue";
 import { createNamespacedHelpers } from "vuex-composition-helpers";
-import Step1 from "../components/dialogs/newBlog/Step1.vue";
-import Step2 from "../components/dialogs/newBlog/Step2.vue";
-import Step3 from "../components/dialogs/newBlog/Step3.vue";
-import Step4 from "../components/dialogs/newBlog/Step4.vue";
+import Step1 from "@/components/dialogs/newBlog/Step1.vue";
+import Step2 from "@/components/dialogs/newBlog/Step2.vue";
+import Step3 from "@/components/dialogs/newBlog/Step3.vue";
+import Step4 from "@/components/dialogs/newBlog/Step4.vue";
 const { useGetters: userGetters, useActions: userActions } =
   createNamespacedHelpers("user");
 const { useActions: blogActions } = createNamespacedHelpers("blog");

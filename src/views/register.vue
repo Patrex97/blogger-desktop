@@ -41,8 +41,8 @@
 import { createNamespacedHelpers } from "vuex-composition-helpers";
 const { useActions } = createNamespacedHelpers("user");
 import { defineComponent, ref } from "vue";
-import Button from "../components/tools/Button.vue";
-import Input from "../components/tools/Input.vue";
+import Button from "@/components/tools/Button.vue";
+import Input from "@/components/tools/Input.vue";
 
 export default defineComponent({
   name: "Register",

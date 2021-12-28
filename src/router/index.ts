@@ -1,16 +1,13 @@
 import { createRouter, createWebHashHistory, RouteRecordRaw } from "vue-router";
-import Home from "../views/index.vue";
-import login from "../views/login.vue";
-import BlogDashboard from "../views/blog/dashboard.vue";
-import BlogPosts from "../views/blog/posts/list.vue";
-import BlogPostCreate from "../views/blog/posts/create.vue";
-import blogs from "../views/blogs.vue";
-import register from "../views/register.vue";
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
-import auth from "./middleware/auth.ts";
-// @ts-ignore
-import guest from "./middleware/guest.ts";
+import Home from "@/views/index.vue";
+import login from "@/views/login.vue";
+import BlogDashboard from "@/views/blog/dashboard.vue";
+import BlogPosts from "@/views/blog/posts/list.vue";
+import BlogPostCreate from "@/views/blog/posts/create.vue";
+import blogs from "@/views/blogs.vue";
+import register from "@/views/register.vue";
+import auth from "./middleware/auth";
+import guest from "./middleware/guest";
 import store from "../store";
 
 const routes: Array<RouteRecordRaw> = [
@@ -76,7 +73,7 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
   if (store.getters["user/getToken"] && !store.getters["user/userData"]) {
-    store.dispatch("fetchUserData");
+    store.dispatch("user/fetchUserData");
   }
   if (!to.meta.middleware) {
     return next();

@@ -5,7 +5,7 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import Navigation from "../components/Navigation.vue";
+import Navigation from "@/components/Navigation.vue";
 import { mapActions } from "vuex";
 
 export default defineComponent({

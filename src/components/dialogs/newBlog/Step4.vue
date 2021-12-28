@@ -17,7 +17,6 @@
 
 <script>
 import Badge from "../../Badge.vue";
-import axios from "axios";
 
 export default {
   name: "Blog-step-4",
