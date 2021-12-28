@@ -2,7 +2,6 @@ import { createRouter, createWebHashHistory, RouteRecordRaw } from "vue-router";
 import Home from "@/views/index.vue";
 import login from "@/views/login.vue";
 import BlogDashboard from "@/views/blog/dashboard.vue";
-import BlogPosts from "@/views/blog/posts/list.vue";
 import BlogPostCreate from "@/views/blog/posts/create.vue";
 import blogs from "@/views/blogs.vue";
 import register from "@/views/register.vue";
@@ -25,12 +24,7 @@ const routes: Array<RouteRecordRaw> = [
         component: BlogDashboard,
       },
       {
-        path: "/:id/posts",
-        name: "Posts",
-        component: BlogPosts,
-      },
-      {
-        path: "/:id/posts/create",
+        path: "/:id/post/create",
         name: "PostCreate",
         component: BlogPostCreate,
       },

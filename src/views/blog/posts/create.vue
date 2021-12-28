@@ -1,7 +1,11 @@
 <template>
   <div>
     <h2 class="create-post__title">Nowy post</h2>
-    <form class="create-post__form" @submit.prevent="addNewPost">
+    <form
+      id="create-post-form"
+      class="create-post__form"
+      @submit.prevent="addNewPost"
+    >
       <Input v-model="newPost.title" label="Tytuł posta" width="100%" />
       <Textarea
         v-model="newPost.content"
@@ -10,8 +14,20 @@
         :rows="10"
       />
       <File />
-      <Button type="submit" class="button--primary">Utwórz post</Button>
     </form>
+    <div class="create-post__buttons">
+      <Button @click="launchPreview" width="150px" class="button--primary">
+        Podgląd
+      </Button>
+      <Button
+        type="submit"
+        form="create-post-form"
+        width="150px"
+        class="button--primary"
+      >
+        Utwórz
+      </Button>
+    </div>
   </div>
 </template>
 
@@ -44,6 +60,9 @@ export default defineComponent({
     addNewPost() {
       this.createPost(this.newPost);
     },
+    launchPreview() {
+      console.log("Uruchomiono podglad posta");
+    },
   },
 });
 </script>
@@ -60,6 +79,14 @@ export default defineComponent({
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
+  }
+  &__buttons {
+    width: 600px;
+    margin-top: 3rem;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    justify-content: space-between;
   }
 }
 </style>

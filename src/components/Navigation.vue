@@ -6,10 +6,10 @@
     </div>
     <div class="nav__links">
       <router-link :to="`/${$route.params.id}`" name="Home">
-        Strona główna
+        Moje posty
       </router-link>
-      <router-link :to="`/${$route.params.id}/posts`" name="Home">
-        Posty
+      <router-link :to="`/${$route.params.id}/post/create`" name="Home">
+        Dodaj nowy post
       </router-link>
       <h1 class="nav__title">{{ blogData?.name }}</h1>
     </div>
@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import { defineComponent, reactive } from "vue";
+import { defineComponent } from "vue";
 import store from "../store";
 import { createNamespacedHelpers } from "vuex-composition-helpers";
 const { useGetters } = createNamespacedHelpers("blog");

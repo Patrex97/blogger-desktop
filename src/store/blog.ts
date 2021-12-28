@@ -27,7 +27,7 @@ export const blog = {
           title,
           tags,
         })
-        .then((response) => {
+        .then(() => {
           dispatch("user/fetchUserData", null, { root: true });
         })
         .catch((e) => console.error(e));
@@ -42,15 +42,16 @@ export const blog = {
     },
     createPost(_: any, newPostData: any) {
       const { title, content } = newPostData;
-      axios
-        .post("http://localhost:3000/blog/create", {
-          title,
-          content,
-        })
-        .then((response) => {
-          console.log(response.data);
-        })
-        .catch((e) => console.error(e));
+      console.log(title, content);
+      // axios
+      //   .post("http://localhost:3000/posts/create", {
+      //     title,
+      //     content,
+      //   })
+      //   .then((response) => {
+      //     console.log(response.data);
+      //   })
+      //   .catch((e) => console.error(e));
     },
   },
 };
