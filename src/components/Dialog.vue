@@ -41,9 +41,9 @@ export default defineComponent({
   transform: translateX(-50%) translateY(-50%);
   z-index: 10;
   min-width: 400px;
-  min-height: 300px;
+  min-height: max-content;
   width: v-bind(width);
-  height: max-content;
+  height: 500px;
   border-radius: 16px;
   box-shadow: rgba(100, 100, 111, 0.2) 0 7px 29px 0;
   background-color: #fff;
@@ -55,10 +55,8 @@ export default defineComponent({
   }
   &__content {
     width: 100%;
-    ::v-deep {
-      > *:not(:last-child) {
-        margin-bottom: 1.25rem;
-      }
+    > :deep(*:not(:last-child)) {
+      margin-bottom: 1.25rem;
     }
   }
   &__buttons {
@@ -66,10 +64,8 @@ export default defineComponent({
     grid-template-rows: max-content;
     grid-template-columns: 1fr 1fr;
     gap: 0.75rem;
-    ::v-deep {
-      .button {
-        width: 100% !important;
-      }
+    :deep(.button) {
+      width: 100% !important;
     }
   }
 }
