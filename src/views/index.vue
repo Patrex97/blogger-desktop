@@ -1,6 +1,6 @@
 <template>
   <Navigation />
-  <router-view></router-view>
+  <router-view class="bottom-padding"></router-view>
 </template>
 
 <script lang="ts">
@@ -22,4 +22,8 @@ export default defineComponent({
 });
 </script>
 
-<style scoped></style>
+<style scoped>
+.bottom-padding {
+  padding-bottom: 20px;
+}
+</style>

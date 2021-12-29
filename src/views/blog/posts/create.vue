@@ -18,7 +18,7 @@
         :key="part.id"
         :is="part.component"
         v-model="part.content"
-        v-bind="partFieldProps(part.component)"
+        v-bind="partFieldProps(part)"
       />
       <Button @click="addNextPart" width="100%" class="button--primary">
         Dodaj element
@@ -67,16 +67,31 @@ export default defineComponent({
             content: "",
           },
           {
-            id: 1,
+            id: 2,
             component: "File",
-            content: "",
+            content: {
+              externalName: "",
+              tempName: "",
+              file: null,
+              isLoaded: false,
+            },
+          },
+          {
+            id: 3,
+            component: "File",
+            content: {
+              externalName: "",
+              tempName: "",
+              file: null,
+              isLoaded: false,
+            },
           },
         ],
       },
       textareaProps: {
-        rows: "10",
+        rows: 10,
         width: "100%",
-        label: "Treśc posta",
+        label: "Treść posta",
       },
     };
   },
@@ -88,8 +103,13 @@ export default defineComponent({
     launchPreview() {
       console.log("Uruchomiono podglad posta");
     },
-    partFieldProps(partName: any) {
-      return partName === "Textarea" ? this.textareaProps : "";
+    partFieldProps(part: any) {
+      return part.component === "Textarea"
+        ? this.textareaProps
+        : { label: part.id };
+    },
+    addNextPart() {
+      console.log("Nowy content dodany");
     },
   },
 });

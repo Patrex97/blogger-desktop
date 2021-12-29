@@ -1,6 +1,6 @@
 <template>
   <div class="input__wrapper">
-    <label class="input" for="file-input">
+    <label class="input" :for="label">
       <div class="input__content" :class="{ 'input__content--preview': file }">
         <span class="input__text">
           {{ file ? "" : "Wrzuć plik tutaj" }}
@@ -8,7 +8,8 @@
       </div>
       <input
         @change="updateValue"
-        id="file-input"
+        :id="label"
+        class="input__hidden"
         type="file"
         accept="image/*"
       />
@@ -17,33 +18,71 @@
   </div>
 </template>
 
-<script lang="ts">
+<script>
 import { defineComponent } from "vue";
 
 export default defineComponent({
   name: "File",
+  props: {
+    label: {
+      type: Number,
+      default: 1,
+    },
+    modelValue: {
+      type: Object,
+      default: null,
+    },
+  },
   data() {
     return {
       file: null,
     };
   },
+  watch: {
+    modelValue() {
+      this.updateLocalStateObject();
+    },
+  },
+  mounted() {
+    this.updateLocalStateObject();
+  },
   methods: {
-    updateValue(event: any) {
-      this.file = event.target.files[0];
-      this.$emit("update:modelValue", event.target.files[0]);
+    updateLocalStateObject() {
+      if (this.modelValue.isLoaded) {
+        if (this.modelValue.tempName) {
+          this.file = {
+            name: this.modelValue.file.name,
+            path: this.modelValue.file.path,
+          };
+        }
+        if (this.modelValue.externalName) {
+          this.file = {
+            name: this.modelValue.externalName,
+            path: this.modelValue.externalName,
+          };
+        }
+      }
+    },
+    updateValue(event) {
+      this.$emit("update:modelValue", {
+        ...this.modelValue,
+        isLoaded: true,
+        tempName: event.target.files[0].name,
+        file: event.target.files[0],
+      });
     },
   },
 });
 </script>
 
 <style lang="scss" scoped>
-#file-input {
-  display: none;
-}
 .input {
   cursor: pointer;
   &__wrapper {
     position: relative;
+  }
+  &__hidden {
+    display: none;
   }
   &__content {
     display: flex;
@@ -66,7 +105,7 @@ export default defineComponent({
     position: absolute;
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
     left: 0;
     top: 0;
     pointer-events: none;
