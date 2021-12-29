@@ -1,7 +1,7 @@
 <template>
   <div class="input__wrapper">
     <label class="input" for="file-input">
-      <div class="input__content">
+      <div class="input__content" :class="{ 'input__content--preview': file }">
         <span class="input__text">
           {{ file ? "" : "Wrzuć plik tutaj" }}
         </span>
@@ -29,7 +29,6 @@ export default defineComponent({
   },
   methods: {
     updateValue(event: any) {
-      console.log(event.target.files[0]);
       this.file = event.target.files[0];
       this.$emit("update:modelValue", event.target.files[0]);
     },
@@ -54,6 +53,10 @@ export default defineComponent({
     height: 300px;
     background-color: #edecf5;
     color: #26489e;
+    &--preview {
+      background-color: white;
+      border: 1px solid #edecf5;
+    }
   }
   &__text {
     font-size: 1.25rem;
