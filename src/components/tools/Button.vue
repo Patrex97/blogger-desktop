@@ -1,5 +1,5 @@
 <template>
-  <button class="button red" v-bind="$attrs">
+  <button class="button red" v-bind="$attrs" :type="type">
     <slot />
   </button>
 </template>
@@ -11,6 +11,10 @@ export default {
     width: {
       type: String,
       default: "max-content",
+    },
+    type: {
+      type: String,
+      default: "button",
     },
   },
 };

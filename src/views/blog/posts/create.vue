@@ -7,13 +7,22 @@
       @submit.prevent="addNewPost"
     >
       <Input v-model="newPost.title" label="Tytuł posta" width="100%" />
-      <Textarea
-        v-model="newPost.content"
-        label="Treść posta"
-        width="100%"
-        :rows="10"
+      <!--      <Textarea-->
+      <!--        v-model="newPost.content"-->
+      <!--        label="Treść posta"-->
+      <!--        width="100%"-->
+      <!--        :rows="10"-->
+      <!--      />-->
+      <component
+        v-for="part in newPost.parts"
+        :key="part.id"
+        :is="part.component"
+        v-model="part.content"
+        v-bind="partFieldProps(part.component)"
       />
-      <File />
+      <Button @click="addNextPart" width="100%" class="button--primary">
+        Dodaj element
+      </Button>
     </form>
     <div class="create-post__buttons">
       <Button @click="launchPreview" width="150px" class="button--primary">
@@ -51,7 +60,23 @@ export default defineComponent({
     return {
       newPost: {
         title: "",
-        content: "",
+        parts: [
+          {
+            id: 1,
+            component: "Textarea",
+            content: "",
+          },
+          {
+            id: 1,
+            component: "File",
+            content: "",
+          },
+        ],
+      },
+      textareaProps: {
+        rows: "10",
+        width: "100%",
+        label: "Treśc posta",
       },
     };
   },
@@ -62,6 +87,9 @@ export default defineComponent({
     },
     launchPreview() {
       console.log("Uruchomiono podglad posta");
+    },
+    partFieldProps(partName: any) {
+      return partName === "Textarea" ? this.textareaProps : "";
     },
   },
 });

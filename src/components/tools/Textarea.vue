@@ -17,7 +17,7 @@
 
 <script>
 export default {
-  name: "Input",
+  name: "Textarea",
   props: {
     modelValue: {
       type: String,
