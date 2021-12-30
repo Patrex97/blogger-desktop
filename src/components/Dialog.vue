@@ -28,7 +28,6 @@ export default defineComponent({
       default: "max-content",
     },
   },
-  emits: ["closeDialog"],
 });
 </script>
 
@@ -43,7 +42,6 @@ export default defineComponent({
   min-width: 400px;
   min-height: max-content;
   width: v-bind(width);
-  height: 500px;
   border-radius: 16px;
   box-shadow: rgba(100, 100, 111, 0.2) 0 7px 29px 0;
   background-color: #fff;

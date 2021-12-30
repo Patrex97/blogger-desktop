@@ -3,7 +3,7 @@
     <label class="input" :for="label">
       <div class="input__content" :class="{ 'input__content--preview': file }">
         <span class="input__text">
-          {{ file ? "" : "Wrzuć plik tutaj" }}
+          {{ file ? "" : "Dodaj zdjęcie" }}
         </span>
       </div>
       <input
