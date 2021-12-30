@@ -20,7 +20,7 @@
         v-model="part.content"
         v-bind="partFieldProps(part)"
       />
-      <Button @click="openPartDialog" width="100%" class="button--primary">
+      <Button @click="openNewPartDialog" width="100%" class="button--primary">
         Dodaj element
       </Button>
     </form>
@@ -37,7 +37,7 @@
         Utwórz
       </Button>
     </div>
-    <Dialog v-model:open="partDialog.isOpen" title="Wybierz rodzaj treści">
+    <Dialog v-model:open="newPartDialog.isOpen" title="Wybierz rodzaj treści">
       <Button
         class="button--primary"
         width="100%"
@@ -49,6 +49,7 @@
         Zdjęcie
       </Button>
     </Dialog>
+    <PostPreview v-model:open="showPreview" :post="newPost" />
   </div>
 </template>
 
@@ -60,10 +61,12 @@ import File from "@/components/tools/File.vue";
 import Button from "@/components/tools/Button.vue";
 import { mapActions } from "vuex";
 import Dialog from "@/components/Dialog.vue";
+import PostPreview from "../../../components/dialogs/PostPreview";
 
 export default defineComponent({
   name: "create",
   components: {
+    PostPreview,
     Button,
     Input,
     File,
@@ -108,11 +111,10 @@ export default defineComponent({
           },
         ],
       },
-      partDialog: {
+      showPreview: false,
+      newPartDialog: {
         isOpen: false,
-        type: "new",
         newPartId: 1000,
-        target: {},
       },
       textareaProps: {
         rows: 10,
@@ -126,19 +128,19 @@ export default defineComponent({
       this.createPost(this.newPost);
     },
     launchPreview() {
-      console.log("Uruchomiono podglad posta");
+      this.showPreview = true;
     },
     partFieldProps(part) {
       return part.component === "Textarea"
         ? this.textareaProps
         : { label: part.id };
     },
-    openPartDialog() {
-      this.partDialog.isOpen = true;
+    openNewPartDialog() {
+      this.newPartDialog.isOpen = true;
     },
     addNewPart(type) {
       let newPartObject = {
-        id: this.partDialog.newPartId++,
+        id: this.newPartDialog.newPartId++,
         component: type,
         content: "",
       };

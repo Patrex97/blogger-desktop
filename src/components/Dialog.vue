@@ -4,7 +4,7 @@
     :class="{ 'overlay--active': open }"
     @click="$emit('update:open', false)"
   />
-  <div class="dialog" :class="{ 'dialog--active': open }">
+  <div v-bind="$attrs" class="dialog" :class="{ 'dialog--active': open }">
     <h2>{{ title }}</h2>
     <div class="dialog__content">
       <slot />
@@ -41,6 +41,7 @@ export default defineComponent({
   z-index: 10;
   min-width: 400px;
   min-height: max-content;
+  max-height: 90vh;
   width: v-bind(width);
   border-radius: 16px;
   box-shadow: rgba(100, 100, 111, 0.2) 0 7px 29px 0;
@@ -50,6 +51,10 @@ export default defineComponent({
     display: grid;
     grid-template-rows: max-content 1fr max-content;
     gap: 1.5rem;
+  }
+  &--overflow {
+    overflow-y: scroll;
+    padding-right: 0;
   }
   &__content {
     width: 100%;
