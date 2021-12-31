@@ -41,7 +41,7 @@
       <Button
         class="button--primary"
         width="100%"
-        @click="addNewPart('Textarea')"
+        @click="addNewPart('Editor')"
       >
         Tekst
       </Button>
@@ -56,7 +56,7 @@
 <script>
 import { defineComponent } from "vue";
 import Input from "@/components/tools/Input.vue";
-import Textarea from "@/components/tools/Textarea.vue";
+import Editor from "@/components/tools/Editor.vue";
 import File from "@/components/tools/File.vue";
 import Button from "@/components/tools/Button.vue";
 import { mapActions } from "vuex";
@@ -69,8 +69,8 @@ export default defineComponent({
     PostPreview,
     Button,
     Input,
+    Editor,
     File,
-    Textarea,
     Dialog,
   },
   data() {
@@ -83,42 +83,12 @@ export default defineComponent({
           file: null,
           isLoaded: false,
         },
-        parts: [
-          {
-            id: 1,
-            component: "Textarea",
-            content: "",
-          },
-          {
-            id: 2,
-            component: "File",
-            content: {
-              externalName: "",
-              tempName: "",
-              file: null,
-              isLoaded: false,
-            },
-          },
-          {
-            id: 3,
-            component: "File",
-            content: {
-              externalName: "",
-              tempName: "",
-              file: null,
-              isLoaded: false,
-            },
-          },
-        ],
+        parts: [],
       },
       showPreview: false,
       newPartDialog: {
         isOpen: false,
         newPartId: 1000,
-      },
-      textareaProps: {
-        rows: 10,
-        width: "100%",
       },
     };
   },
@@ -131,9 +101,7 @@ export default defineComponent({
       this.showPreview = true;
     },
     partFieldProps(part) {
-      return part.component === "Textarea"
-        ? this.textareaProps
-        : { label: part.id };
+      return part.component === "File" ? { label: part.id } : {};
     },
     openNewPartDialog() {
       this.newPartDialog.isOpen = true;
