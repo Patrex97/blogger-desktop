@@ -54,7 +54,7 @@ export default defineComponent({
   },
   methods: {
     getComponentName(componentName) {
-      if (componentName === "Textarea") {
+      if (componentName === "Editor") {
         return "Text";
       }
       if (componentName === "File") {

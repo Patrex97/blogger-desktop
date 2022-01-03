@@ -33,13 +33,16 @@ export default {
     outline: 1px solid rgba(#26489e, 40%);
   }
   &--primary {
-    background-color: #091f57;
+    background-color: #191f57;
     color: #edecf5;
     &:hover {
       background-color: #26489e;
     }
     &:active {
       background-color: #3770ff;
+    }
+    &--variant {
+      background-color: #001f87;
     }
   }
 }

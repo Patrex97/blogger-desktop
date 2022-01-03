@@ -1,12 +1,15 @@
 <template>
   <div v-if="editor" class="editor">
     <div class="editor__tools gray">
-      <button
+      <Button
+        class="editor__button button--primary"
+        :class="{
+          'button--primary--variant': editor.isActive('bold'),
+        }"
         @click="editor.chain().focus().toggleBold().run()"
-        :class="{ 'is-active': editor.isActive('bold') }"
       >
-        Pogrubienie
-      </button>
+        B
+      </Button>
     </div>
     <editor-content class="editor__textarea" :editor="editor" />
   </div>
@@ -16,9 +19,11 @@
 import { Editor, EditorContent } from "@tiptap/vue-3";
 import StarterKit from "@tiptap/starter-kit";
 import Bold from "@tiptap/extension-bold";
+import Button from "./Button.vue";
 
 export default {
   components: {
+    Button,
     EditorContent,
   },
 
@@ -89,6 +94,11 @@ export default {
     & :deep(p) {
       text-align: left;
     }
+  }
+  &__button {
+    padding: 2px 10px !important;
+    font-size: 20px;
+    font-weight: 900 !important;
   }
 }
 </style>
