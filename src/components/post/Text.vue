@@ -18,5 +18,8 @@ export default {
 .post-text {
   font-size: 1.15rem;
   white-space: pre-line;
+  :deep(p):empty {
+    padding-bottom: 16px;
+  }
 }
 </style>
