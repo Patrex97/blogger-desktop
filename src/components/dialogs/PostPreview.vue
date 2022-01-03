@@ -69,7 +69,7 @@ export default defineComponent({
 .post-preview {
   display: grid;
   gap: 1.5rem;
-  padding: 0 25px;
+  padding: 0 25px 2rem 25px;
   &__title {
     font-size: 3rem;
     letter-spacing: 1px;
