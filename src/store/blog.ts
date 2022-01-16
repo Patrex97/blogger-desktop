@@ -40,18 +40,37 @@ export const blog = {
         })
         .catch((e) => console.error(e));
     },
-    createPost(_: any, newPostData: any) {
-      const { title, content } = newPostData;
-      console.log(title, content);
-      // axios
-      //   .post("http://localhost:3000/posts/create", {
-      //     title,
-      //     content,
-      //   })
-      //   .then((response) => {
-      //     console.log(response.data);
-      //   })
-      //   .catch((e) => console.error(e));
+    createPost({ state, dispatch }: any, newPostData: any) {
+      const { title, featuredImage, parts } = newPostData;
+      console.log(state.blog);
+      axios
+        .post("http://localhost:3000/posts/create", {
+          title,
+          blogId: state.blog.id,
+        })
+        .then(({ data }) => {
+          dispatch("addContent", {
+            postId: data.id,
+            parts,
+          });
+        })
+        .catch((e) => console.error(e));
+    },
+    addContent(_: any, postData: any) {
+      const { postId, parts } = postData;
+      parts.forEach(({ content, type }: any, index: number) => {
+        axios
+          .post("http://localhost:3000/content/add", {
+            postId,
+            content,
+            type,
+            order: index + 1,
+          })
+          .then(({ data }) => {
+            console.log(data);
+          })
+          .catch((e) => console.error(e));
+      });
     },
   },
 };

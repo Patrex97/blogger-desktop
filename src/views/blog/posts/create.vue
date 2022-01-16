@@ -62,6 +62,7 @@ import Button from "@/components/tools/Button.vue";
 import { mapActions } from "vuex";
 import Dialog from "@/components/Dialog.vue";
 import PostPreview from "../../../components/dialogs/PostPreview";
+import { ContentTypes } from "@/interfaces/contentTypes";
 
 export default defineComponent({
   name: "create",
@@ -111,6 +112,7 @@ export default defineComponent({
         id: this.newPartDialog.newPartId++,
         component: type,
         content: "",
+        type: ContentTypes.Text,
       };
       if (type === "File") {
         newPartObject.content = {
@@ -119,6 +121,7 @@ export default defineComponent({
           file: null,
           isLoaded: false,
         };
+        newPartObject.type = ContentTypes.Image;
       }
       this.newPost.parts.push(newPartObject);
     },
