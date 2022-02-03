@@ -4,10 +4,14 @@ export const blog = {
   namespaced: true,
   state: {
     blog: {},
+    posts: [],
   },
   mutations: {
     setBlog(state: any, payload: any): void {
       state.blog = payload;
+    },
+    setPosts(state: any, payload: any): void {
+      state.posts = payload;
     },
   },
   getters: {
@@ -15,7 +19,7 @@ export const blog = {
       return state.blog;
     },
     posts(state: any): any {
-      return state.blog.posts;
+      return state.posts;
     },
   },
   actions: {
@@ -40,11 +44,18 @@ export const blog = {
         })
         .catch((e) => console.error(e));
     },
+    fetchBlogPosts({ commit, state }: any) {
+      axios
+        .get(`http://localhost:3000/post/findAll/${state.blog.id}`)
+        .then((response) => {
+          commit("setPosts", response.data);
+        })
+        .catch((e) => console.error(e));
+    },
     createPost({ state, dispatch }: any, newPostData: any) {
       const { title, featuredImage, parts } = newPostData;
-      console.log(state.blog);
       axios
-        .post("http://localhost:3000/posts/create", {
+        .post("http://localhost:3000/post/create", {
           title,
           blogId: state.blog.id,
         })
@@ -58,14 +69,23 @@ export const blog = {
     },
     addContent(_: any, postData: any) {
       const { postId, parts } = postData;
-      parts.forEach(({ content, type }: any, index: number) => {
+      const testData = new FormData();
+      testData.append("test", "aaa");
+      console.log("testData", testData);
+      parts.forEach((part: any, index: number) => {
+        const { type, content } = part;
+        console.log("part", type, content.file);
+        const formData = new FormData();
+        formData.append("postId", postId);
+        formData.append("type", type);
+        if (content.file) {
+          formData.append("content", content.file, content.fileName);
+        } else {
+          formData.append("content", content);
+        }
+        formData.append("order", (index + 1).toString());
         axios
-          .post("http://localhost:3000/content/add", {
-            postId,
-            content,
-            type,
-            order: index + 1,
-          })
+          .post("http://localhost:3000/content/add", formData)
           .then(({ data }) => {
             console.log(data);
           })

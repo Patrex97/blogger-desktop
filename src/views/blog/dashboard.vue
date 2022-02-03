@@ -1,22 +1,59 @@
 <template>
-  <Editor v-model="content" />
+  <div class="dashboard">
+    <div class="post" v-for="post in posts" :key="post.id">
+      <span class="post__title">{{ post.title }}</span>
+    </div>
+  </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import Editor from "@/components/tools/Editor.vue";
+import { mapActions, mapGetters } from "vuex";
 
 export default defineComponent({
   name: "create",
-  components: {
-    Editor,
-  },
   data() {
     return {
       content: "",
     };
   },
+  computed: {
+    ...mapGetters("blog", ["posts"]),
+  },
+  created() {
+    this.fetchBlogPosts();
+  },
+  methods: {
+    ...mapActions("blog", ["fetchBlogPosts"]),
+  },
 });
 </script>
 
-<style scoped></style>
+<style lang="scss" scoped>
+.dashboard {
+  max-width: 960px;
+  margin: 0 auto;
+  display: grid;
+  gap: 1.5rem;
+}
+
+.post {
+  height: 64px;
+  border: 2px solid black;
+  background-color: lightgray;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  &:hover {
+    background-color: #001f87;
+    .post__title {
+      color: white;
+    }
+  }
+  &__title {
+    font-size: 2rem;
+    font-weight: bold;
+  }
+}
+</style>
