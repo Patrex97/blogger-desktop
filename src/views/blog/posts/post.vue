@@ -1,22 +1,32 @@
 <template>
-  <pre>{{ post }}</pre>
+  <section class="post"><PostContent :post="post" /></section>
 </template>
 
 <script>
 import { mapActions, mapGetters } from "vuex";
+import PostContent from "@/components/post/PostContent.vue";
+import { defineComponent } from "vue";
 
-export default {
+export default defineComponent({
   name: "post",
+  components: {
+    PostContent,
+  },
   computed: {
     ...mapGetters("post", ["post"]),
   },
   mounted() {
-    this.fetchPostData(this.$route.params.postId);
+    this.fetchPostData(this.$route.params.postId.toString());
   },
   methods: {
     ...mapActions("post", ["fetchPostData"]),
   },
-};
+});
 </script>
 
-<style scoped></style>
+<style lang="scss" scoped>
+.post {
+  width: 750px;
+  margin: auto;
+}
+</style>

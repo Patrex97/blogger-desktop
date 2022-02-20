@@ -26,7 +26,7 @@ export default defineComponent({
     ...mapGetters("post", ["posts"]),
   },
   created() {
-    this.fetchBlogPosts();
+    this.fetchBlogPosts(this.$route.params.id);
   },
   methods: {
     ...mapActions("post", ["fetchBlogPosts"]),
@@ -43,17 +43,18 @@ export default defineComponent({
   max-width: 960px;
   margin: 0 auto;
   display: grid;
+  grid-auto-rows: minmax(64px, max-content);
   gap: 1.5rem;
 }
 
 .post {
-  height: 64px;
   border: 2px solid black;
   background-color: lightgray;
   border-radius: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 0.5rem;
   &:hover {
     background-color: #001f87;
     .post__title {

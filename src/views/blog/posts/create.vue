@@ -14,9 +14,9 @@
         Treść posta
       </p>
       <component
-        v-for="part in newPost.parts"
+        v-for="part in newPost.content"
         :key="part.id"
-        :is="part.component"
+        :is="getComponentName(part.type)"
         v-model="part.content"
         v-bind="partFieldProps(part)"
       />
@@ -45,7 +45,11 @@
       >
         Tekst
       </Button>
-      <Button class="button--primary" width="100%" @click="addNewPart('File')">
+      <Button
+        class="button--primary"
+        width="100%"
+        @click="addNewPart(this.ContentType.Image)"
+      >
         Zdjęcie
       </Button>
     </Dialog>
@@ -62,7 +66,8 @@ import Button from "@/components/tools/Button.vue";
 import { mapActions } from "vuex";
 import Dialog from "@/components/Dialog.vue";
 import PostPreview from "../../../components/dialogs/PostPreview";
-import { ContentTypes } from "@/interfaces/contentTypes";
+import { ContentType } from "@/interfaces/contentType";
+import { getComponentName } from "@/helpers";
 
 export default defineComponent({
   name: "create",
@@ -76,6 +81,7 @@ export default defineComponent({
   },
   data() {
     return {
+      ContentType,
       newPost: {
         title: "",
         featuredImage: {
@@ -84,7 +90,7 @@ export default defineComponent({
           file: null,
           isLoaded: false,
         },
-        parts: [],
+        content: [],
       },
       showPreview: false,
       newPartDialog: {
@@ -95,6 +101,7 @@ export default defineComponent({
   },
   methods: {
     ...mapActions("post", ["createPost"]),
+    getComponentName,
     addNewPost() {
       this.createPost(this.newPost);
     },
@@ -102,28 +109,28 @@ export default defineComponent({
       this.showPreview = true;
     },
     partFieldProps(part) {
-      return part.component === "File" ? { label: part.id } : {};
+      return part.type === ContentType.Image ? { label: part.id } : {};
     },
     openNewPartDialog() {
       this.newPartDialog.isOpen = true;
     },
     addNewPart(type) {
+      console.log("type", type);
       let newPartObject = {
         id: this.newPartDialog.newPartId++,
-        component: type,
         content: "",
-        type: ContentTypes.Text,
+        type: ContentType.Text,
       };
-      if (type === "File") {
+      if (type === ContentType.Image) {
         newPartObject.content = {
           externalName: "",
           tempName: "",
           file: null,
           isLoaded: false,
         };
-        newPartObject.type = ContentTypes.Image;
+        newPartObject.type = ContentType.Image;
       }
-      this.newPost.parts.push(newPartObject);
+      this.newPost.content.push(newPartObject);
     },
   },
 });

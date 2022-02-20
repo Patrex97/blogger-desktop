@@ -23,7 +23,7 @@ export const post = {
     },
   },
   actions: {
-    fetchPostData({ commit }: any, postId: string) {
+    fetchPostData({ commit }: any, postId: string): void {
       axios
         .get(`http://localhost:3000/post/findOne/${postId}`)
         .then((response) => {
@@ -31,16 +31,16 @@ export const post = {
         })
         .catch((e) => console.error(e));
     },
-    fetchBlogPosts({ commit, rootState }: any) {
+    fetchBlogPosts({ commit }: any, blogId: string): void {
       axios
-        .get(`http://localhost:3000/post/findAll/${rootState.blog.blog.id}`)
+        .get(`http://localhost:3000/post/findAll/${blogId}`)
         .then((response) => {
           commit("setPosts", response.data);
         })
         .catch((e) => console.error(e));
     },
-    createPost({ state, dispatch, rootState }: any, newPostData: any) {
-      const { title, featuredImage, parts } = newPostData;
+    createPost({ state, dispatch, rootState }: any, newPostData: any): void {
+      const { title, featuredImage, content } = newPostData;
       axios
         .post("http://localhost:3000/post/create", {
           title,
@@ -49,17 +49,17 @@ export const post = {
         .then(({ data }) => {
           dispatch("addContent", {
             postId: data.id,
-            parts,
+            content,
           });
         })
         .catch((e) => console.error(e));
     },
-    addContent(_: any, postData: any) {
-      const { postId, parts } = postData;
+    addContent(_: any, postData: any): void {
+      const { postId, content } = postData;
       const testData = new FormData();
       testData.append("test", "aaa");
       console.log("testData", testData);
-      parts.forEach((part: any, index: number) => {
+      content.forEach((part: any, index: number) => {
         const { type, content } = part;
         console.log("part", type, content.file);
         const formData = new FormData();
