@@ -94,7 +94,7 @@ export default defineComponent({
     };
   },
   methods: {
-    ...mapActions("blog", ["createPost"]),
+    ...mapActions("post", ["createPost"]),
     addNewPost() {
       this.createPost(this.newPost);
     },

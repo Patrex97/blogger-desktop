@@ -4,18 +4,33 @@ export const post = {
   namespaced: true,
   state: {
     posts: [],
+    post: {},
   },
   mutations: {
     setPosts(state: any, payload: any): void {
       state.posts = payload;
+    },
+    setPost(state: any, payload: any): void {
+      state.post = payload;
     },
   },
   getters: {
     posts(state: any): any {
       return state.posts;
     },
+    post(state: any): any {
+      return state.post;
+    },
   },
   actions: {
+    fetchPostData({ commit }: any, postId: string) {
+      axios
+        .get(`http://localhost:3000/post/findOne/${postId}`)
+        .then((response) => {
+          commit("setPost", response.data);
+        })
+        .catch((e) => console.error(e));
+    },
     fetchBlogPosts({ commit, rootState }: any) {
       axios
         .get(`http://localhost:3000/post/findAll/${rootState.blog.blog.id}`)
@@ -24,12 +39,12 @@ export const post = {
         })
         .catch((e) => console.error(e));
     },
-    createPost({ state, dispatch }: any, newPostData: any) {
+    createPost({ state, dispatch, rootState }: any, newPostData: any) {
       const { title, featuredImage, parts } = newPostData;
       axios
         .post("http://localhost:3000/post/create", {
           title,
-          blogId: state.blog.id,
+          blogId: rootState.blog.blog.id,
         })
         .then(({ data }) => {
           dispatch("addContent", {

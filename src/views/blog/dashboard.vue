@@ -1,6 +1,11 @@
 <template>
   <div class="dashboard">
-    <div class="post" v-for="post in posts" :key="post.id">
+    <div
+      class="post"
+      v-for="post in posts"
+      :key="post.id"
+      @click="goToPost(post.id)"
+    >
       <span class="post__title">{{ post.title }}</span>
     </div>
   </div>
@@ -25,6 +30,10 @@ export default defineComponent({
   },
   methods: {
     ...mapActions("post", ["fetchBlogPosts"]),
+    goToPost(postId: string) {
+      const path = this.$route.path;
+      this.$router.push(`${path}/post/${postId}`);
+    },
   },
 });
 </script>

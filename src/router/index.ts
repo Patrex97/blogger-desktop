@@ -3,6 +3,7 @@ import Home from "@/views/index.vue";
 import login from "@/views/login.vue";
 import BlogDashboard from "@/views/blog/dashboard.vue";
 import BlogPostCreate from "@/views/blog/posts/create.vue";
+import SinglePost from "@/views/blog/posts/post.vue";
 import blogs from "@/views/blogs.vue";
 import register from "@/views/register.vue";
 import auth from "./middleware/auth";
@@ -27,6 +28,11 @@ const routes: Array<RouteRecordRaw> = [
         path: "/:id/post/create",
         name: "PostCreate",
         component: BlogPostCreate,
+      },
+      {
+        path: "/:id/post/:postId",
+        name: "PostDetails",
+        component: SinglePost,
       },
     ],
   },
