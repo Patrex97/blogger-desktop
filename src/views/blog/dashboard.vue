@@ -18,13 +18,13 @@ export default defineComponent({
     };
   },
   computed: {
-    ...mapGetters("blog", ["posts"]),
+    ...mapGetters("post", ["posts"]),
   },
   created() {
     this.fetchBlogPosts();
   },
   methods: {
-    ...mapActions("blog", ["fetchBlogPosts"]),
+    ...mapActions("post", ["fetchBlogPosts"]),
   },
 });
 </script>
