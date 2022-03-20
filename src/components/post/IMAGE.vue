@@ -1,9 +1,13 @@
 <template>
-  <img class="post-image" :src="getImagePath(content)" alt="" />
+  <img
+    class="post-image"
+    :src="variant ? getImage(content) : getImagePath(content)"
+    alt=""
+  />
 </template>
 
 <script>
-import { getImagePath } from "@/helpers";
+import { getImagePath, getImage } from "@/helpers";
 
 export default {
   name: "Image",
@@ -12,13 +16,14 @@ export default {
       type: Object,
       required: true,
     },
-    type: {
-      type: String,
-      default: "default",
+    variant: {
+      type: Boolean,
+      default: false,
     },
   },
   methods: {
     getImagePath,
+    getImage,
   },
 };
 </script>

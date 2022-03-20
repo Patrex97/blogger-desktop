@@ -58,17 +58,13 @@ export const post = {
     },
     addContent(_: any, postData: any): void {
       const { postId, content } = postData;
-      const testData = new FormData();
-      testData.append("test", "aaa");
-      console.log("testData", testData);
       content.forEach((part: any, index: number) => {
         const { type, content } = part;
-        console.log("part", type, content.file);
         const formData = new FormData();
         formData.append("postId", postId);
         formData.append("type", type);
         if (content.file) {
-          formData.append("content", content.file, content.fileName);
+          formData.append("image", content.file);
         } else {
           formData.append("content", content);
         }

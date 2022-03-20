@@ -1,5 +1,5 @@
 <template>
-  <section class="post"><PostContent :post="post" /></section>
+  <main class="post"><PostContent :post="post" variant /></main>
 </template>
 
 <script>

@@ -10,6 +10,10 @@ export default {
       type: String,
       required: true,
     },
+    variant: {
+      type: Boolean,
+      default: false,
+    },
   },
 };
 </script>

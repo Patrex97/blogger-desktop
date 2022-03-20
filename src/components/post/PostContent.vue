@@ -1,17 +1,20 @@
 <template>
   <div v-if="post" class="post-preview text-left">
-    <h2 class="post-preview__title">Podgląd nowego posta</h2>
+    <h2 v-if="!variant" class="post-preview__title">Podgląd nowego posta</h2>
     <img
+      v-if="variant"
       class="post-preview__image"
       :src="getImage(post.featuredImage)"
       alt=""
     />
+    <Image v-else :content="post.featuredImage" />
     <h2 class="post-preview__title">{{ post.title }}</h2>
     <component
       v-for="part in filteredPostParts"
       :key="part.id"
       :is="part.type"
       :content="part.content"
+      :variant="variant"
     />
   </div>
 </template>
@@ -32,6 +35,10 @@ export default {
     post: {
       type: Object,
       required: true,
+    },
+    variant: {
+      type: Boolean,
+      default: false,
     },
   },
   computed: {

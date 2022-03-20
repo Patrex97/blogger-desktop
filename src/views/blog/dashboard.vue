@@ -1,7 +1,6 @@
 <template>
   <div class="dashboard">
     <h2>test</h2>
-    <img src="http://localhost:3000/post/file" />
     <div
       class="post"
       v-for="post in posts"
