@@ -6,7 +6,7 @@
 import { getImagePath } from "@/helpers";
 
 export default {
-  name: "Text",
+  name: "Image",
   props: {
     content: {
       type: Object,

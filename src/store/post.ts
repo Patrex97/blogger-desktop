@@ -23,7 +23,7 @@ export const post = {
     },
   },
   actions: {
-    fetchPostData({ commit }: any, postId: string): void {
+    fetchPostData({ commit, dispatch }: any, postId: string): void {
       axios
         .get(`http://localhost:3000/post/findOne/${postId}`)
         .then((response) => {
@@ -41,11 +41,13 @@ export const post = {
     },
     createPost({ state, dispatch, rootState }: any, newPostData: any): void {
       const { title, featuredImage, content } = newPostData;
+      console.log(featuredImage.file);
+      const postData = new FormData();
+      postData.append("title", title);
+      postData.append("blogId", rootState.blog.blog.id);
+      postData.append("featuredImage", featuredImage.file);
       axios
-        .post("http://localhost:3000/post/create", {
-          title,
-          blogId: rootState.blog.blog.id,
-        })
+        .post("http://localhost:3000/post/create", postData)
         .then(({ data }) => {
           dispatch("addContent", {
             postId: data.id,

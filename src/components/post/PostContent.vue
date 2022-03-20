@@ -1,7 +1,7 @@
 <template>
   <div v-if="post" class="post-preview text-left">
-    <!--      <h2 class="post-preview__title">Podgląd nowego posta</h2>-->
-    <!--    <IMAGE :content="post.featuredImage" />-->
+    <h2 class="post-preview__title">Podgląd nowego posta</h2>
+    <IMAGE :content="post.featuredImage" />
     <h2 class="post-preview__title">{{ post.title }}</h2>
     <component
       v-for="part in filteredPostParts"

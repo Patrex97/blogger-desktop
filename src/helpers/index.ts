@@ -2,7 +2,9 @@ import { ContentType } from "../interfaces/contentType";
 import { Image } from "../interfaces";
 
 export function getImagePath(image: string | Image): string {
-  if (typeof image === "string") return image;
+  if (typeof image === "string") {
+    return image.startsWith("http") ? image : `http://localhost:3000/post/file`;
+  }
   if (image.isLoaded) {
     if (image.tempName && image.file) {
       return image.file.path;

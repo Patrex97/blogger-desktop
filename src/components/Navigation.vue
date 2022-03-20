@@ -8,7 +8,7 @@
       <router-link :to="`/${$route.params.id}`" name="Home">
         Moje posty
       </router-link>
-      <router-link :to="`/${$route.params.id}/post/create`" name="Home">
+      <router-link :to="`/${$route.params.id}/post/create`" name="New post">
         Dodaj nowy post
       </router-link>
       <h1 class="nav__title">{{ blogData?.name }}</h1>
