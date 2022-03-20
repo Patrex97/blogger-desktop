@@ -1,7 +1,11 @@
 <template>
   <div v-if="post" class="post-preview text-left">
     <h2 class="post-preview__title">Podgląd nowego posta</h2>
-    <IMAGE :content="post.featuredImage" />
+    <img
+      class="post-preview__image"
+      :src="getImage(post.featuredImage)"
+      alt=""
+    />
     <h2 class="post-preview__title">{{ post.title }}</h2>
     <component
       v-for="part in filteredPostParts"
@@ -13,6 +17,8 @@
 </template>
 
 <script>
+import { getImage } from "@/helpers";
+
 import IMAGE from "./IMAGE.vue";
 import TEXT from "./TEXT.vue";
 
@@ -33,6 +39,9 @@ export default {
       return this.post?.content?.filter((part) => !!part.content);
     },
   },
+  methods: {
+    getImage,
+  },
 };
 </script>
 
@@ -40,5 +49,10 @@ export default {
 .post-preview {
   display: grid;
   gap: 1.5rem;
+  &__image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+  }
 }
 </style>
