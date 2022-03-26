@@ -23,11 +23,12 @@ export const post = {
     },
   },
   actions: {
-    fetchPostData({ commit, dispatch }: any, postId: string): void {
+    fetchPostData({ commit }: any, postId: string): void {
       axios
         .get(`http://localhost:3000/post/findOne/${postId}`)
         .then((response) => {
           commit("setPost", response.data);
+          return response.data;
         })
         .catch((e) => console.error(e));
     },
