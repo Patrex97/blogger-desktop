@@ -77,5 +77,15 @@ export const post = {
           .catch((e) => console.error(e));
       });
     },
+    deletePost({ rootState, dispatch }: any, postId: string): boolean {
+      axios
+        .delete(`http://localhost:3000/post/${postId}`)
+        .then(({ data }) => {
+          dispatch("fetchBlogPosts", rootState.blog.blog?.id);
+          return data;
+        })
+        .catch((e) => console.error(e));
+      return false;
+    },
   },
 };

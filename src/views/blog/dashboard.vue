@@ -1,23 +1,20 @@
 <template>
   <div class="dashboard">
-    <h2>test</h2>
-    <div
-      class="post"
-      v-for="post in posts"
-      :key="post.id"
-      @click="goToPost(post.id)"
-    >
-      <span class="post__title">{{ post.title }}</span>
-    </div>
+    <h2 class="dashboard__title">Posts</h2>
+    <Preview v-for="post in posts" :key="post.id" :post="post" />
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
 import { mapActions, mapGetters } from "vuex";
+import Preview from "@/components/post/Preview.vue";
 
 export default defineComponent({
   name: "create",
+  components: {
+    Preview,
+  },
   data() {
     return {
       content: "",
@@ -31,10 +28,6 @@ export default defineComponent({
   },
   methods: {
     ...mapActions("post", ["fetchBlogPosts"]),
-    goToPost(postId: string) {
-      const path = this.$route.path;
-      this.$router.push(`${path}/post/${postId}`);
-    },
   },
 });
 </script>
@@ -46,25 +39,8 @@ export default defineComponent({
   display: grid;
   grid-auto-rows: minmax(64px, max-content);
   gap: 1.5rem;
-}
-
-.post {
-  border: 2px solid black;
-  background-color: lightgray;
-  border-radius: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0.5rem;
-  &:hover {
-    background-color: #001f87;
-    .post__title {
-      color: white;
-    }
-  }
   &__title {
-    font-size: 2rem;
-    font-weight: bold;
+    font-size: 5rem;
   }
 }
 </style>
