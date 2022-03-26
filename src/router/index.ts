@@ -1,5 +1,5 @@
 import { createRouter, createWebHashHistory, RouteRecordRaw } from "vue-router";
-import Home from "@/views/index.vue";
+import Home from "@/views/home.vue";
 import login from "@/views/login.vue";
 import BlogDashboard from "@/views/blog/dashboard.vue";
 import BlogPostCreate from "@/views/blog/posts/create.vue";
@@ -72,6 +72,7 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
+  store.dispatch("app/checkConnection");
   if (store.getters["user/getToken"] && !store.getters["user/userData"]) {
     store.dispatch("user/fetchUserData");
   }

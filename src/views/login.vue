@@ -48,7 +48,6 @@ export default defineComponent({
     const email = ref("");
     const password = ref("");
     const { login } = useActions(["login"]);
-
     function handleLogin(): void {
       login({
         email: email.value,
