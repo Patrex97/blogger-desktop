@@ -12,20 +12,21 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import { mapActions } from "vuex";
+import { mapActions, mapMutations } from "vuex";
 
 export default defineComponent({
   name: "PostPreview",
   props: ["post"],
   methods: {
-    ...mapActions("post", ["deletePost"]),
+    ...mapActions("post", ["deletePost", "fetchPostData"]),
     goToPost() {
       const path = this.$route.path;
       this.$router.push(`${path}/post/${this.post.id}`);
     },
-    goToEditPage() {
+    async goToEditPage() {
+      await this.fetchPostData(this.post.id);
       const path = this.$route.path;
-      this.$router.push(`${path}/post/edit/${this.post.id}`);
+      await this.$router.push(`${path}/post/create`);
     },
   },
 });

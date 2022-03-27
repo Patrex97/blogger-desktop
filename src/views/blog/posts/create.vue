@@ -4,7 +4,7 @@
     <form
       id="create-post-form"
       class="create-post__form"
-      @submit.prevent="addNewPost"
+      @submit.prevent="handleSubmit"
     >
       <p class="create-post__subtitle">Tytuł posta</p>
       <Input v-model="newPost.title" width="100%" />
@@ -63,7 +63,7 @@ import Input from "@/components/tools/Input.vue";
 import Editor from "@/components/tools/Editor.vue";
 import File from "@/components/tools/File.vue";
 import Button from "@/components/tools/Button.vue";
-import { mapActions } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 import Dialog from "@/components/Dialog.vue";
 import PostPreview from "../../../components/dialogs/PostPreview";
 import { ContentType } from "@/interfaces/contentType";
@@ -81,6 +81,7 @@ export default defineComponent({
   },
   data() {
     return {
+      editForm: false,
       ContentType,
       newPost: {
         title: "",
@@ -99,11 +100,57 @@ export default defineComponent({
       },
     };
   },
+  computed: {
+    ...mapGetters("post", ["post"]),
+  },
+  watch: {
+    post() {
+      this.editPostInit();
+    },
+    newPost: {
+      handler(val) {
+        console.log("NEW POST VALUE: ", val);
+      },
+      deep: true,
+    },
+  },
   methods: {
     ...mapActions("post", ["createPost"]),
     getComponentName,
-    addNewPost() {
-      this.createPost(this.newPost);
+    editPostInit() {
+      console.log("post", this.post);
+      const { title, featuredImage, content } = this.post;
+      this.newPost = {
+        title,
+        featuredImage: {
+          externalName: featuredImage,
+          isLoaded: !!featuredImage,
+        },
+        content: content.map((item) => {
+          console.log("content item", item);
+          if (item.type === ContentType.Image) {
+            return {
+              ...item,
+              content: {
+                externalName: item.content,
+                tempName: "",
+                file: null,
+                isLoaded: !!item.content,
+              },
+            };
+          }
+          return item;
+        }),
+      };
+      this.editForm = true;
+    },
+    handleSubmit() {
+      if (this.editForm) {
+        console.log("this is edit post form");
+        this.createPost(this.newPost);
+      } else {
+        this.createPost(this.newPost);
+      }
     },
     launchPreview() {
       this.showPreview = true;
@@ -115,7 +162,6 @@ export default defineComponent({
       this.newPartDialog.isOpen = true;
     },
     addNewPart(type) {
-      console.log("type", type);
       let newPartObject = {
         id: this.newPartDialog.newPartId++,
         content: "",

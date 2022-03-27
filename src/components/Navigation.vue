@@ -8,7 +8,11 @@
       <router-link :to="`/${$route.params.id}`" name="Home">
         Moje posty
       </router-link>
-      <router-link :to="`/${$route.params.id}/post/create`" name="New post">
+      <router-link
+        :to="`/${$route.params.id}/post/create`"
+        @click="resetPostState"
+        name="New post"
+      >
         Dodaj nowy post
       </router-link>
       <h1 class="nav__title">{{ blogData?.name }}</h1>
@@ -21,16 +25,21 @@ import { defineComponent } from "vue";
 import store from "../store";
 import { createNamespacedHelpers } from "vuex-composition-helpers";
 const { useGetters } = createNamespacedHelpers("blog");
+const { useMutations } = createNamespacedHelpers("post");
 
 export default defineComponent({
   name: "Navigation",
   setup() {
     const { blogData } = useGetters(["blogData"]);
+    const { setPost } = useMutations(["setPost"]);
     function handleLogout() {
       store.dispatch("user/logout");
     }
+    function resetPostState() {
+      setPost(null);
+    }
 
-    return { blogData, handleLogout };
+    return { blogData, handleLogout, resetPostState };
   },
 });
 </script>

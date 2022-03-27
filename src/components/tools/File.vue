@@ -20,6 +20,7 @@
 
 <script>
 import { defineComponent } from "vue";
+import { getImage } from "@/helpers";
 
 export default defineComponent({
   name: "File",
@@ -39,14 +40,18 @@ export default defineComponent({
     };
   },
   watch: {
-    modelValue() {
-      this.updateLocalStateObject();
+    modelValue: {
+      handler() {
+        this.updateLocalStateObject();
+      },
+      deep: true,
     },
   },
   mounted() {
     this.updateLocalStateObject();
   },
   methods: {
+    getImage,
     updateLocalStateObject() {
       if (this.modelValue.isLoaded) {
         if (this.modelValue.tempName) {
@@ -54,11 +59,12 @@ export default defineComponent({
             name: this.modelValue.file.name,
             path: this.modelValue.file.path,
           };
+          return;
         }
         if (this.modelValue.externalName) {
           this.file = {
             name: this.modelValue.externalName,
-            path: this.modelValue.externalName,
+            path: this.getImage(this.modelValue.externalName),
           };
         }
       }
