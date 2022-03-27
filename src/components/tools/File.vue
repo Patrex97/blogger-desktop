@@ -66,8 +66,10 @@ export default defineComponent({
             name: this.modelValue.externalName,
             path: this.getImage(this.modelValue.externalName),
           };
+          return;
         }
       }
+      this.file = null;
     },
     updateValue(event) {
       this.$emit("update:modelValue", {

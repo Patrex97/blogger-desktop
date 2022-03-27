@@ -104,8 +104,12 @@ export default defineComponent({
     ...mapGetters("post", ["post"]),
   },
   watch: {
-    post() {
-      this.editPostInit();
+    post(val) {
+      if (val) {
+        this.editPostInit();
+      } else {
+        this.createPostInit();
+      }
     },
     newPost: {
       handler(val) {
@@ -117,6 +121,19 @@ export default defineComponent({
   methods: {
     ...mapActions("post", ["createPost"]),
     getComponentName,
+    createPostInit() {
+      this.newPost = {
+        title: "",
+        featuredImage: {
+          externalName: "",
+          tempName: "",
+          file: null,
+          isLoaded: false,
+        },
+        content: [],
+      };
+      this.editForm = false;
+    },
     editPostInit() {
       console.log("post", this.post);
       const { title, featuredImage, content } = this.post;

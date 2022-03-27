@@ -42,7 +42,6 @@ export const post = {
     },
     createPost({ state, dispatch, rootState }: any, newPostData: any): void {
       const { title, featuredImage, content } = newPostData;
-      console.log(featuredImage.file);
       const postData = new FormData();
       postData.append("title", title);
       postData.append("blogId", rootState.blog.blog.id);
