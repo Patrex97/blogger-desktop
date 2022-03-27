@@ -1,6 +1,8 @@
 <template>
   <div>
-    <h2 class="create-post__title">Nowy post</h2>
+    <h2 class="create-post__title">
+      {{ editForm ? "Edytuj post" : "Nowy post" }}
+    </h2>
     <form
       id="create-post-form"
       class="create-post__form"
@@ -119,7 +121,7 @@ export default defineComponent({
     },
   },
   methods: {
-    ...mapActions("post", ["createPost"]),
+    ...mapActions("post", ["createPost", "updatePost"]),
     getComponentName,
     createPostInit() {
       this.newPost = {
@@ -164,7 +166,7 @@ export default defineComponent({
     handleSubmit() {
       if (this.editForm) {
         console.log("this is edit post form");
-        this.createPost(this.newPost);
+        this.updatePost(this.newPost);
       } else {
         this.createPost(this.newPost);
       }

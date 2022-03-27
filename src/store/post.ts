@@ -1,4 +1,5 @@
 import axios from "axios";
+import { ContentType } from "../interfaces/contentType";
 
 export const post = {
   namespaced: true,
@@ -47,7 +48,7 @@ export const post = {
       postData.append("blogId", rootState.blog.blog.id);
       postData.append("featuredImage", featuredImage.file);
       axios
-        .post("http://localhost:3000/post/form", postData)
+        .post("http://localhost:3000/post/create", postData)
         .then(({ data }) => {
           dispatch("addContent", {
             postId: data.id,
@@ -75,6 +76,60 @@ export const post = {
             console.log(data);
           })
           .catch((e) => console.error(e));
+      });
+    },
+    updatePost({ state, dispatch, rootState }: any, updatePostData: any): void {
+      const { title, featuredImage, content } = updatePostData;
+      const postData = new FormData();
+      postData.append("title", title);
+      postData.append("blogId", rootState.blog.blog.id);
+      postData.append("featuredImage", featuredImage.file);
+      axios
+        .post(`http://localhost:3000/post/update/${state.post?.id}`, postData)
+        .then(({ data }) => {
+          // dispatch("addContent", {
+          //   postId: data.id,
+          //   content,
+          // });
+        })
+        .catch((e) => console.error(e));
+    },
+    handleContent({ state }: any, postData: any): void {
+      const currentContent = state.post.content;
+      let removedContentParts = [...currentContent];
+      const { postId, content } = postData;
+      content.forEach((part: any, index: number) => {
+        if (typeof part.id === "number") {
+          console.log("this is new content object", part);
+        } else {
+          const currentContentPart = currentContent.find(
+            ({ id }: any) => id === part.id
+          );
+          if (currentContentPart.order === part.order) {
+            if (currentContentPart.type === ContentType.Image) {
+              if (
+                !currentContentPart.content.file &&
+                !!currentContentPart.externalName
+              ) {
+                console.log("this content part was not updated");
+              } else {
+                console.log("this is edited content object", part);
+              }
+            } else {
+              if (currentContentPart.content === part.content) {
+                console.log("this content part was not updated");
+              } else {
+                console.log("this is edited content object", part);
+              }
+            }
+          } else {
+            console.log("this is edited content object", part);
+          }
+          removedContentParts = currentContent.filter(
+            ({ id }: any) => id === part.id
+          );
+        }
+        console.log("Those elements are removed", removedContentParts);
       });
     },
     deletePost({ rootState, dispatch }: any, postId: string): boolean {
