@@ -47,7 +47,7 @@ export const post = {
       postData.append("blogId", rootState.blog.blog.id);
       postData.append("featuredImage", featuredImage.file);
       axios
-        .post("http://localhost:3000/post/create", postData)
+        .post("http://localhost:3000/post/form", postData)
         .then(({ data }) => {
           dispatch("addContent", {
             postId: data.id,

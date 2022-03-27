@@ -26,7 +26,7 @@ export default defineComponent({
     async goToEditPage() {
       await this.fetchPostData(this.post.id);
       const path = this.$route.path;
-      await this.$router.push(`${path}/post/create`);
+      await this.$router.push(`${path}/post/form`);
     },
   },
 });

@@ -9,7 +9,7 @@
         Moje posty
       </router-link>
       <router-link
-        :to="`/${$route.params.id}/post/create`"
+        :to="`/${$route.params.id}/post/form`"
         @click="resetPostState"
         name="New post"
       >
