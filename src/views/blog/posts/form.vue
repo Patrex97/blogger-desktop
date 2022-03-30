@@ -23,6 +23,13 @@
           v-model="part.content"
           v-bind="partFieldProps(part)"
         />
+        <button
+          type="button"
+          class="content__remove"
+          @click="removeContent(index)"
+        >
+          X
+        </button>
         <div class="content__buttons">
           <button
             type="button"
@@ -236,7 +243,7 @@ export default defineComponent({
       this.newPost.content = contentCopy;
     },
     removeContent(index) {
-      console.log(index);
+      this.newPost.content.splice(index, 1);
     },
   },
 });
@@ -287,6 +294,7 @@ export default defineComponent({
     gap: 0.25rem;
   }
   &__button {
+    cursor: pointer;
     padding: 0.25rem 0.4125rem;
     border-radius: 4px;
     border-color: #191f57 !important;
@@ -305,6 +313,22 @@ export default defineComponent({
     &--disabled {
       pointer-events: none;
       opacity: 0.6;
+    }
+  }
+  &__remove {
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: -60px;
+    padding: 0.25rem 0.75rem;
+    border-radius: 4px;
+    border-color: #191f57 !important;
+    font-size: 1.25rem;
+    font-weight: 900;
+    &:hover {
+      border-color: #3770ff !important;
+      background-color: #698ee9;
     }
   }
 }

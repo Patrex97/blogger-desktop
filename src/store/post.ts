@@ -113,44 +113,6 @@ export const post = {
         })
         .catch((e) => console.error(e));
     },
-    // handleContent({ state }: any, postData: any): void {
-    //   const currentContent = state.post.content;
-    //   let removedContentParts = [...currentContent];
-    //   const { postId, content } = postData;
-    //   content.forEach((part: any, index: number) => {
-    //     if (typeof part.id === "number") {
-    //       console.log("this is new content object", part);
-    //     } else {
-    //       const currentContentPart = currentContent.find(
-    //         ({ id }: any) => id === part.id
-    //       );
-    //       if (currentContentPart.order === part.order) {
-    //         if (currentContentPart.type === ContentType.Image) {
-    //           if (
-    //             !currentContentPart.content.file &&
-    //             !!currentContentPart.externalName
-    //           ) {
-    //             console.log("this content part was not updated");
-    //           } else {
-    //             console.log("this is edited content object", part);
-    //           }
-    //         } else {
-    //           if (currentContentPart.content === part.content) {
-    //             console.log("this content part was not updated");
-    //           } else {
-    //             console.log("this is edited content object", part);
-    //           }
-    //         }
-    //       } else {
-    //         console.log("this is edited content object", part);
-    //       }
-    //       removedContentParts = currentContent.filter(
-    //         ({ id }: any) => id === part.id
-    //       );
-    //     }
-    //     console.log("Those elements are removed", removedContentParts);
-    //   });
-    // },
     deletePost({ rootState, dispatch }: any, postId: string): boolean {
       axios
         .delete(`http://localhost:3000/post/${postId}`)
