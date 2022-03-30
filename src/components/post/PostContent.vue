@@ -20,12 +20,13 @@
 </template>
 
 <script>
+import { defineComponent } from "vue";
 import { getImage } from "@/helpers";
 
 import IMAGE from "./IMAGE.vue";
 import TEXT from "./TEXT.vue";
 
-export default {
+export default defineComponent({
   name: "PostContent",
   components: {
     IMAGE,
@@ -43,17 +44,13 @@ export default {
   },
   computed: {
     filteredPostParts() {
-      return this.post?.content
-        ?.filter((part) => !!part.content)
-        .sort((partOne, partTwo) => {
-          return partOne.order - partTwo.order;
-        });
+      return this.post?.content?.filter((part) => !!part.content);
     },
   },
   methods: {
     getImage,
   },
-};
+});
 </script>
 
 <style lang="scss" scoped>

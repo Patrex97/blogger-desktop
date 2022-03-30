@@ -235,6 +235,9 @@ export default defineComponent({
       contentCopy[index] = { ...itemCopy };
       this.newPost.content = contentCopy;
     },
+    removeContent(index) {
+      console.log(index);
+    },
   },
 });
 </script>
