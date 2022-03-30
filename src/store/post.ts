@@ -89,18 +89,27 @@ export const post = {
       const postData = new FormData();
       postData.append("title", title);
       postData.append("blogId", rootState.blog.blog.id);
-      console.log(featuredImage.file);
-
       postData.append("featuredImage", featuredImage.file);
       axios
         .patch(`http://localhost:3000/post/${state.post?.id}`, postData)
         .then(({ data }) => {
-          console.log(data);
-
-          // dispatch("addContent", {
-          //   postId: data.id,
-          //   content,
-          // });
+          if (data) {
+            dispatch("replacePostContent", updatePostData);
+          }
+        })
+        .catch((e) => console.error(e));
+    },
+    replacePostContent({ state, dispatch }: any, updatePostData: any) {
+      const { content } = updatePostData;
+      axios
+        .delete(`http://localhost:3000/content/${state.post?.id}`)
+        .then(({ data }) => {
+          if (data) {
+            dispatch("addContent", {
+              postId: state.post?.id,
+              content,
+            });
+          }
         })
         .catch((e) => console.error(e));
     },
