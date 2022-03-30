@@ -43,7 +43,11 @@ export default {
   },
   computed: {
     filteredPostParts() {
-      return this.post?.content?.filter((part) => !!part.content);
+      return this.post?.content
+        ?.filter((part) => !!part.content)
+        .sort((partOne, partTwo) => {
+          return partOne.order - partTwo.order;
+        });
     },
   },
   methods: {

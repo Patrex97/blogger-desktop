@@ -28,7 +28,7 @@
             type="button"
             class="content__button content__button--up"
             :class="{ 'content__button--disabled': index === 0 }"
-            @click="moveUp(part, index)"
+            @click="moveUp(index)"
           >
             <img :src="ARROW_URL" alt="arrow-up" />
           </button>
@@ -38,7 +38,7 @@
             :class="{
               'content__button--disabled': index === newPost.content.length - 1,
             }"
-            @click="moveDown(part, index)"
+            @click="moveDown(index)"
           >
             <img :src="ARROW_URL" alt="arrow-up" />
           </button>
@@ -221,11 +221,19 @@ export default defineComponent({
       }
       this.newPost.content.push(newPartObject);
     },
-    moveUp(part, index) {
-      console.log("part", part);
+    moveUp(index) {
+      const contentCopy = [...this.newPost.content];
+      const itemCopy = { ...contentCopy[index - 1] };
+      contentCopy[index - 1] = { ...contentCopy[index] };
+      contentCopy[index] = { ...itemCopy };
+      this.newPost.content = contentCopy;
     },
-    moveDown(part, index) {
-      console.log("part", part);
+    moveDown(index) {
+      const contentCopy = [...this.newPost.content];
+      const itemCopy = { ...contentCopy[index + 1] };
+      contentCopy[index + 1] = { ...contentCopy[index] };
+      contentCopy[index] = { ...itemCopy };
+      this.newPost.content = contentCopy;
     },
   },
 });
