@@ -1,32 +1,54 @@
 <template>
   <div>
-    <h2 class="create-post__title">
+    <h2 class="form__title">
       {{ editForm ? "Edytuj post" : "Nowy post" }}
     </h2>
     <form
       id="create-post-form"
-      class="create-post__form"
+      class="form__form"
       @submit.prevent="handleSubmit"
     >
-      <p class="create-post__subtitle">Tytuł posta</p>
+      <p class="form__subtitle">Tytuł posta</p>
       <Input v-model="newPost.title" width="100%" />
-      <p class="create-post__subtitle">Zdjęcie tytułowe</p>
+      <p class="form__subtitle">Zdjęcie tytułowe</p>
       <File v-model="newPost.featuredImage" />
-      <p class="create-post__subtitle create-post__subtitle--between">
-        Treść posta
-      </p>
-      <component
-        v-for="part in newPost.content"
+      <p class="form__subtitle form__subtitle--between">Treść posta</p>
+      <div
+        class="content__item"
+        v-for="(part, index) in newPost.content"
         :key="part.id"
-        :is="getComponentName(part.type)"
-        v-model="part.content"
-        v-bind="partFieldProps(part)"
-      />
+      >
+        <component
+          :is="getComponentName(part.type)"
+          v-model="part.content"
+          v-bind="partFieldProps(part)"
+        />
+        <div class="content__buttons">
+          <button
+            type="button"
+            class="content__button content__button--up"
+            :class="{ 'content__button--disabled': index === 0 }"
+            @click="moveUp(part, index)"
+          >
+            <img :src="ARROW_URL" alt="arrow-up" />
+          </button>
+          <button
+            type="button"
+            class="content__button content__button--down"
+            :class="{
+              'content__button--disabled': index === newPost.content.length - 1,
+            }"
+            @click="moveDown(part, index)"
+          >
+            <img :src="ARROW_URL" alt="arrow-up" />
+          </button>
+        </div>
+      </div>
       <Button @click="openNewPartDialog" width="100%" class="button--primary">
         Dodaj element
       </Button>
     </form>
-    <div class="create-post__buttons">
+    <div class="form__buttons">
       <Button @click="launchPreview" width="150px" class="button--primary">
         Podgląd
       </Button>
@@ -70,6 +92,7 @@ import Dialog from "@/components/Dialog.vue";
 import PostPreview from "../../../components/dialogs/PostPreview";
 import { ContentType } from "@/interfaces/contentType";
 import { getComponentName } from "@/helpers";
+import { ARROW_URL } from "@/constants";
 
 export default defineComponent({
   name: "create",
@@ -83,6 +106,7 @@ export default defineComponent({
   },
   data() {
     return {
+      ARROW_URL,
       editForm: false,
       ContentType,
       newPost: {
@@ -197,12 +221,18 @@ export default defineComponent({
       }
       this.newPost.content.push(newPartObject);
     },
+    moveUp(part, index) {
+      console.log("part", part);
+    },
+    moveDown(part, index) {
+      console.log("part", part);
+    },
   },
 });
 </script>
 
 <style lang="scss" scoped>
-.create-post {
+.form {
   &__title {
     font-size: 2.5rem;
     margin-bottom: 2rem;
@@ -230,6 +260,41 @@ export default defineComponent({
     margin-right: auto;
     display: flex;
     justify-content: space-between;
+  }
+}
+
+.content {
+  &__item {
+    position: relative;
+  }
+  &__buttons {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: -60px;
+    display: grid;
+    gap: 0.25rem;
+  }
+  &__button {
+    padding: 0.25rem 0.4125rem;
+    border-radius: 4px;
+    border-color: #191f57 !important;
+    &:hover {
+      border-color: #3770ff !important;
+      background-color: #698ee9;
+    }
+    & > img {
+      width: 14px;
+      height: 14px;
+      margin-top: 2px;
+    }
+    &--down {
+      transform: rotate(180deg);
+    }
+    &--disabled {
+      pointer-events: none;
+      opacity: 0.6;
+    }
   }
 }
 </style>
