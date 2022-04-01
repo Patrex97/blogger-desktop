@@ -59,6 +59,9 @@
       <Button @click="launchPreview" width="150px" class="button--primary">
         Podgląd
       </Button>
+      <Button @click="savePostTemplate" class="button--primary">
+        Zapisz szablon posta
+      </Button>
       <Button
         type="submit"
         form="create-post-form"
@@ -153,6 +156,7 @@ export default defineComponent({
   },
   methods: {
     ...mapActions("post", ["createPost", "updatePost"]),
+    ...mapActions("template", ["saveTemplate"]),
     getComponentName,
     createPostInit() {
       this.newPost = {
@@ -244,6 +248,11 @@ export default defineComponent({
     },
     removeContent(index) {
       this.newPost.content.splice(index, 1);
+    },
+    savePostTemplate() {
+      const { content } = this.newPost;
+      const contentArray = content.map((part) => part.type);
+      this.saveTemplate(contentArray);
     },
   },
 });

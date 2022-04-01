@@ -2,8 +2,8 @@ import { createStore } from "vuex";
 import { user } from "./user";
 import { blog } from "./blog";
 import { post } from "./post";
-import { app } from "./app";
+import { template } from "./template";
 
 export default createStore({
-  modules: { app, user, blog, post },
+  modules: { user, blog, post, template },
 });

@@ -72,7 +72,6 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  store.dispatch("app/checkConnection");
   if (store.getters["user/getToken"] && !store.getters["user/userData"]) {
     store.dispatch("user/fetchUserData");
   }
