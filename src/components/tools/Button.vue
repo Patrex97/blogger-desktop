@@ -45,5 +45,8 @@ export default {
       background-color: #001f87;
     }
   }
+  &--expanded {
+    grid-column: 1 / -1;
+  }
 }
 </style>

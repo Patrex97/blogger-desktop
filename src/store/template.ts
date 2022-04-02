@@ -16,12 +16,12 @@ export const template = {
     },
   },
   actions: {
-    saveTemplate({ dispatch }: any, contentList: string[]) {
+    saveTemplate({ dispatch }: any, templateData: any) {
       axios
-        .post("http://localhost:3000/template/save", { contentList })
+        .post("http://localhost:3000/template/save", templateData)
         .then(({ data }) => {
           console.log(data);
-          if (data) {
+          if (data?.id) {
             dispatch("fetchTemplates");
           }
         })
@@ -31,7 +31,7 @@ export const template = {
       axios
         .get("http://localhost:3000/template")
         .then(({ data }) => {
-          console.log(data);
+          commit("settemplates", data);
         })
         .catch((e) => console.error(e));
     },

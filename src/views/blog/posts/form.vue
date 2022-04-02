@@ -59,7 +59,7 @@
       <Button @click="launchPreview" width="150px" class="button--primary">
         Podgląd
       </Button>
-      <Button @click="savePostTemplate" class="button--primary">
+      <Button @click="saveTemplateDialog.isOpen = true" class="button--primary">
         Zapisz szablon posta
       </Button>
       <Button
@@ -71,6 +71,24 @@
         Utwórz
       </Button>
     </div>
+    <Dialog
+      v-model:open="saveTemplateDialog.isOpen"
+      title="Podaj nazwę szablonu"
+    >
+      <Input v-model="saveTemplateDialog.title" width="100%" />
+      <template #buttons>
+        <Button
+          class="button--primary"
+          width="100%"
+          @click="saveTemplateDialog.isOpen = false"
+        >
+          Zamknij
+        </Button>
+        <Button class="button--primary" width="100%" @click="savePostTemplate">
+          Zapisz
+        </Button>
+      </template>
+    </Dialog>
     <Dialog v-model:open="newPartDialog.isOpen" title="Wybierz rodzaj treści">
       <Button
         class="button--primary"
@@ -86,6 +104,15 @@
       >
         Zdjęcie
       </Button>
+      <template #buttons>
+        <Button
+          class="button--primary button--expanded"
+          width="100%"
+          @click="newPartDialog.isOpen = false"
+        >
+          Zamknij
+        </Button>
+      </template>
     </Dialog>
     <PostPreview v-model:open="showPreview" :post="newPost" />
   </div>
@@ -134,10 +161,15 @@ export default defineComponent({
         isOpen: false,
         newPartId: 1000,
       },
+      saveTemplateDialog: {
+        isOpen: false,
+        title: "",
+      },
     };
   },
   computed: {
     ...mapGetters("post", ["post"]),
+    ...mapGetters("template", ["templates"]),
   },
   watch: {
     post(val) {
@@ -147,12 +179,15 @@ export default defineComponent({
         this.createPostInit();
       }
     },
-    newPost: {
-      handler(val) {
-        console.log("NEW POST VALUE: ", val);
-      },
-      deep: true,
+    templates(val) {
+      console.log("templates", val);
     },
+    // newPost: {
+    //   handler(val) {
+    //     console.log("NEW POST VALUE: ", val);
+    //   },
+    //   deep: true,
+    // },
   },
   methods: {
     ...mapActions("post", ["createPost", "updatePost"]),
@@ -251,8 +286,9 @@ export default defineComponent({
     },
     savePostTemplate() {
       const { content } = this.newPost;
-      const contentArray = content.map((part) => part.type);
-      this.saveTemplate(contentArray);
+      const contentList = content.map((part) => part.type);
+      this.saveTemplate({ title: this.saveTemplateDialog.title, contentList });
+      this.saveTemplateDialog.isOpen = false;
     },
   },
 });
