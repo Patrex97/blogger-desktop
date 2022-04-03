@@ -9,7 +9,7 @@ export function getImagePath(image: string | Image): string {
       return image.file.path;
     }
     if (image.externalName) {
-      return image.externalName;
+      return getImage(image.externalName);
     }
   }
   return "";

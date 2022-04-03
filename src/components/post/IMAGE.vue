@@ -21,6 +21,9 @@ export default {
       default: false,
     },
   },
+  mounted() {
+    console.log(getImagePath(this.content));
+  },
   methods: {
     getImagePath,
     getImage,
@@ -33,5 +36,6 @@ export default {
   width: 100%;
   height: 300px;
   object-fit: cover;
+  display: block;
 }
 </style>
