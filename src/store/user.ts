@@ -45,9 +45,18 @@ export const user = {
           email,
           password,
         })
-        .then((response) => {
+        .then(({ data }) => {
+          if (data.error) {
+            console.log(data.error);
+
+            commit(
+              "setSnackbar",
+              { message: data.error, variant: "error" },
+              { root: true }
+            );
+          }
           dispatch("fetchUserData");
-          commit("setToken", response.data.token);
+          commit("setToken", data.token);
           router.push("/blogs");
         })
         .catch((e) => console.error(e));

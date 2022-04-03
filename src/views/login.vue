@@ -1,5 +1,6 @@
 <template>
   <main class="wrapper">
+    <Snackbar />
     <div class="login">
       <h1 class="login__title primary--text">Zaloguj się</h1>
       <div class="login__form">
@@ -41,6 +42,7 @@ const { useActions } = createNamespacedHelpers("user");
 import { defineComponent, ref } from "vue";
 import Button from "@/components/tools/Button.vue";
 import Input from "@/components/tools/Input.vue";
+import Snackbar from "@/components/Snackbar.vue";
 
 export default defineComponent({
   name: "Login",
@@ -60,6 +62,7 @@ export default defineComponent({
   components: {
     Button,
     Input,
+    Snackbar,
   },
 });
 </script>
