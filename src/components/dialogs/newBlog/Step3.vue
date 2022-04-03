@@ -1,80 +1,26 @@
 <template>
-  <p v-bind="$attrs">Przypisz tagi do bloga (minimum 1)</p>
-  <div class="dialog__badges">
-    <Badge
-      v-for="tag in tags"
-      :key="tag.id"
-      class="dialog__badge white--text"
-      :class="{ primary: !tag.selected, secondary: tag.selected }"
-      @click="selectTag(tag)"
-    >
-      {{ tag.name }}
-    </Badge>
+  <p v-bind="$attrs">Twój blog zostanie utworzony z następującymi danymi</p>
+  <div class="dialog__summary">
+    <h3>{{ newBlog.name }}</h3>
+    <p>{{ `https:/theBestBlog.test/${newBlog.url}` }}</p>
   </div>
 </template>
 
 <script>
-import Badge from "../../Badge.vue";
-import axios from "axios";
-
 export default {
   name: "Blog-step-3",
-  components: {
-    Badge,
-  },
   props: {
-    modelValue: Array,
-  },
-  data() {
-    return {
-      tags: [],
-    };
-  },
-  computed: {
-    selectedTags() {
-      return this.tags.filter((tag) => tag.selected);
-    },
-  },
-  mounted() {
-    axios
-      .get("http://localhost:3000/tag/all")
-      .then((response) => {
-        this.tags = response.data;
-      })
-      .catch((e) => console.error(e));
-  },
-  methods: {
-    selectTag(tag) {
-      const tagIndex = this.tags.indexOf(tag);
-      if (tag.selected) {
-        this.tags[tagIndex] = {
-          ...tag,
-          selected: false,
-        };
-      } else {
-        this.tags[tagIndex] = {
-          ...tag,
-          selected: true,
-        };
-      }
-      this.$emit("update:modelValue", this.selectedTags);
-    },
+    newBlog: Object,
   },
 };
 </script>
 
 <style lang="scss" scoped>
 .dialog {
-  &__badges {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.75rem;
-  }
-  &__badge {
-    cursor: pointer;
-    &:hover {
-      background-color: #26489e;
-    }
+  &__summary {
+    display: grid;
+    gap: 1.5rem;
+    font-size: 1.25rem;
   }
 }
 </style>

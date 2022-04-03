@@ -17,11 +17,6 @@
       class="blog primary white--text"
     >
       <h2 class="blog__name">{{ blog.name }}</h2>
-      <div class="blog__tags">
-        <Badge v-for="tag in blog.tags" :key="tag.id" class="blog__tag">
-          {{ tag.name }}
-        </Badge>
-      </div>
     </router-link>
     <template v-if="!userBlogs.length">
       <p>Nie masz żadnych blogów</p>
@@ -36,8 +31,7 @@
   <Dialog v-model:open="newBlogDialog.isOpen" title="Nowy blog" width="250px">
     <Step1 v-if="newBlogDialog.currentStep === 1" v-model="newBlog.name" />
     <Step2 v-if="newBlogDialog.currentStep === 2" v-model="newBlog.url" />
-    <Step3 v-if="newBlogDialog.currentStep === 3" v-model="newBlog.tags" />
-    <Step4 v-if="newBlogDialog.currentStep === 4" :new-blog="newBlog" />
+    <Step3 v-if="newBlogDialog.currentStep === 3" :new-blog="newBlog" />
     <template v-slot:buttons>
       <Button
         v-if="newBlogDialog.currentStep === 1"
@@ -54,14 +48,14 @@
         Wróć
       </Button>
       <Button
-        v-if="newBlogDialog.currentStep < 4"
+        v-if="newBlogDialog.currentStep < 3"
         class="button--primary"
         @click="newBlogDialog.currentStep++"
       >
         Dalej
       </Button>
       <Button
-        v-if="newBlogDialog.currentStep === 4"
+        v-if="newBlogDialog.currentStep === 3"
         class="button--primary"
         @click="createNewBlog"
       >
@@ -72,7 +66,6 @@
 </template>
 
 <script lang="ts">
-import Badge from "@/components/Badge.vue";
 import Button from "@/components/tools/Button.vue";
 import Dialog from "@/components/Dialog.vue";
 import { defineComponent, reactive, watch } from "vue";
@@ -80,7 +73,6 @@ import { createNamespacedHelpers } from "vuex-composition-helpers";
 import Step1 from "@/components/dialogs/newBlog/Step1.vue";
 import Step2 from "@/components/dialogs/newBlog/Step2.vue";
 import Step3 from "@/components/dialogs/newBlog/Step3.vue";
-import Step4 from "@/components/dialogs/newBlog/Step4.vue";
 const { useGetters: userGetters, useActions: userActions } =
   createNamespacedHelpers("user");
 const { useActions: blogActions } = createNamespacedHelpers("blog");
@@ -91,9 +83,7 @@ export default defineComponent({
     Step1,
     Step2,
     Step3,
-    Step4,
     Button,
-    Badge,
     Dialog,
   },
   setup() {
@@ -108,7 +98,6 @@ export default defineComponent({
     let newBlog = reactive({
       name: "",
       url: "",
-      tags: [],
     });
 
     watch(newBlogDialog, (newValue) => {
@@ -152,13 +141,6 @@ export default defineComponent({
   border-radius: 8px;
   &__name {
     margin-bottom: 1rem;
-  }
-  &__tags {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-    gap: 0.5rem;
   }
 }
 </style>
