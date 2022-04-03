@@ -15,8 +15,15 @@
             v-for="template in templates"
             :key="template.id"
             class="dropdown__item"
+            @click="loadTemplate(template.contentList)"
           >
-            {{ template.title }}
+            <span>{{ template.title }}</span>
+            <button
+              class="dropdown__button"
+              @click.stop="removeTemplate(template.id)"
+            >
+              X
+            </button>
           </p>
         </template>
       </Dropdown>
@@ -215,7 +222,11 @@ export default defineComponent({
   },
   methods: {
     ...mapActions("post", ["createPost", "updatePost"]),
-    ...mapActions("template", ["saveTemplate", "fetchTemplates"]),
+    ...mapActions("template", [
+      "saveTemplate",
+      "removeTemplate",
+      "fetchTemplates",
+    ]),
     getComponentName,
     createPostInit() {
       this.newPost = {
@@ -314,6 +325,22 @@ export default defineComponent({
       this.saveTemplate({ title: this.saveTemplateDialog.title, contentList });
       this.saveTemplateDialog.isOpen = false;
     },
+    loadTemplate(content) {
+      this.newPost = {
+        title: "",
+        featuredImage: {
+          externalName: "",
+          tempName: "",
+          file: null,
+          isLoaded: false,
+        },
+        content: [],
+      };
+      const componentList = content.split("-");
+      if (componentList[0] !== "") {
+        componentList.forEach((name) => this.addNewPart(name));
+      }
+    },
   },
 });
 </script>
@@ -409,12 +436,35 @@ export default defineComponent({
   }
 }
 
-.dropdown__item {
-  width: 100%;
-  text-align: left;
-  padding: 0.5rem;
-  &:hover {
-    background-color: rgb(224, 221, 238);
+.dropdown {
+  &__item {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    text-align: left;
+    padding: 0.5rem;
+    font-weight: 700;
+    &:not(:last-of-type) {
+      border-bottom: 1px solid rgb(117, 115, 126);
+    }
+    &:hover {
+      background-color: rgb(224, 221, 238);
+    }
+  }
+  &__button {
+    cursor: pointer;
+    font-size: 0.75rem;
+    font-weight: 900;
+    margin-left: 0.5rem;
+    padding: 0.125rem 0.25rem;
+    background-color: rgb(169, 156, 228);
+    border: none;
+    &:hover {
+      background-color: rgb(113, 90, 216);
+      color: white;
+    }
   }
 }
 </style>

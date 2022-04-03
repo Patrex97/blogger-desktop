@@ -28,7 +28,6 @@ export default {
     flex-direction: column;
     border-radius: 8px;
     background-color: rgb(206, 204, 214);
-    box-shadow: ;
   }
   &__item {
     padding: 0.25rem 0.5rem;

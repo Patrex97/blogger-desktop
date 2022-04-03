@@ -20,8 +20,17 @@ export const template = {
       axios
         .post("http://localhost:3000/template/save", templateData)
         .then(({ data }) => {
-          console.log(data);
           if (data?.id) {
+            dispatch("fetchTemplates");
+          }
+        })
+        .catch((e) => console.error(e));
+    },
+    removeTemplate({ dispatch }: any, id: any) {
+      axios
+        .delete(`http://localhost:3000/template/${id}`)
+        .then(({ data }) => {
+          if (data) {
             dispatch("fetchTemplates");
           }
         })
