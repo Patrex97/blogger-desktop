@@ -1,8 +1,26 @@
 <template>
   <div>
-    <h2 class="form__title">
-      {{ editForm ? "Edytuj post" : "Nowy post" }}
-    </h2>
+    <div class="form__header">
+      <h2 class="form__title">
+        {{ editForm ? "Edytuj post" : "Nowy post" }}
+      </h2>
+      <Dropdown v-model:open="templateDropdown">
+        <template #activator>
+          <button @click="templateDropdown = !templateDropdown">
+            Szablony
+          </button>
+        </template>
+        <template #content>
+          <p
+            v-for="template in templates"
+            :key="template.id"
+            class="dropdown__item"
+          >
+            {{ template.title }}
+          </p>
+        </template>
+      </Dropdown>
+    </div>
     <form
       id="create-post-form"
       class="form__form"
@@ -130,6 +148,7 @@ import PostPreview from "../../../components/dialogs/PostPreview";
 import { ContentType } from "@/interfaces/contentType";
 import { getComponentName } from "@/helpers";
 import { ARROW_URL } from "@/constants";
+import Dropdown from "@/components/tools/Dropdown.vue";
 
 export default defineComponent({
   name: "create",
@@ -140,6 +159,7 @@ export default defineComponent({
     Editor,
     File,
     Dialog,
+    Dropdown,
   },
   data() {
     return {
@@ -165,6 +185,7 @@ export default defineComponent({
         isOpen: false,
         title: "",
       },
+      templateDropdown: false,
     };
   },
   computed: {
@@ -189,9 +210,12 @@ export default defineComponent({
     //   deep: true,
     // },
   },
+  mounted() {
+    this.fetchTemplates();
+  },
   methods: {
     ...mapActions("post", ["createPost", "updatePost"]),
-    ...mapActions("template", ["saveTemplate"]),
+    ...mapActions("template", ["saveTemplate", "fetchTemplates"]),
     getComponentName,
     createPostInit() {
       this.newPost = {
@@ -296,13 +320,20 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .form {
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 auto;
+    max-width: 600px;
+    margin-bottom: 2rem;
+  }
   &__title {
     font-size: 2.5rem;
-    margin-bottom: 2rem;
   }
   &__form {
     margin: 0 auto;
-    width: 600px;
+    max-width: 600px;
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
@@ -375,6 +406,15 @@ export default defineComponent({
       border-color: #3770ff !important;
       background-color: #698ee9;
     }
+  }
+}
+
+.dropdown__item {
+  width: 100%;
+  text-align: left;
+  padding: 0.5rem;
+  &:hover {
+    background-color: rgb(224, 221, 238);
   }
 }
 </style>
