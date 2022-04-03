@@ -73,14 +73,15 @@ export const post = {
         if (content.file) {
           formData.append("image", content.file);
         } else {
-          formData.append("content", content);
+          if (content.externalName) {
+            formData.append("content", content.externalName);
+          } else {
+            formData.append("content", content);
+          }
         }
         formData.append("order", (index + 1).toString());
         axios
           .post("http://localhost:3000/content/add", formData)
-          .then(({ data }) => {
-            console.log(data);
-          })
           .catch((e) => console.error(e));
       });
     },

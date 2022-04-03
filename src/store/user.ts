@@ -69,9 +69,6 @@ export const user = {
           email,
           password,
         })
-        .then((response) => {
-          console.log(response.data);
-        })
         .catch((e) => console.error(e));
     },
   },

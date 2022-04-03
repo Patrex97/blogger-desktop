@@ -207,15 +207,6 @@ export default defineComponent({
         this.createPostInit();
       }
     },
-    templates(val) {
-      console.log("templates", val);
-    },
-    // newPost: {
-    //   handler(val) {
-    //     console.log("NEW POST VALUE: ", val);
-    //   },
-    //   deep: true,
-    // },
   },
   mounted() {
     this.fetchTemplates();
@@ -242,7 +233,6 @@ export default defineComponent({
       this.editForm = false;
     },
     editPostInit() {
-      console.log("post", this.post);
       const { title, featuredImage, content } = this.post;
       this.newPost = {
         title,
@@ -251,7 +241,6 @@ export default defineComponent({
           isLoaded: !!featuredImage,
         },
         content: content.map((item) => {
-          console.log("content item", item);
           if (item.type === ContentType.Image) {
             return {
               ...item,
@@ -270,7 +259,6 @@ export default defineComponent({
     },
     handleSubmit() {
       if (this.editForm) {
-        console.log("this is edit post form");
         this.updatePost(this.newPost);
       } else {
         this.createPost(this.newPost);
