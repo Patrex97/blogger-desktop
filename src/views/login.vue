@@ -4,8 +4,13 @@
     <div class="login">
       <h1 class="login__title primary--text">Zaloguj się</h1>
       <div class="login__form">
-        <Input placeholder="Login" width="341px" v-model="email" />
-        <Input placeholder="Hasło" width="341px" v-model="password" />
+        <Input placeholder="Email" type="email" width="341px" v-model="email" />
+        <Input
+          placeholder="Hasło"
+          type="password"
+          width="341px"
+          v-model="password"
+        />
         <Button
           class="login__button button--primary"
           width="341px"
@@ -40,21 +45,32 @@
 import { createNamespacedHelpers } from "vuex-composition-helpers";
 const { useActions } = createNamespacedHelpers("user");
 import { defineComponent, ref } from "vue";
+import { useStore } from "vuex";
 import Button from "@/components/tools/Button.vue";
 import Input from "@/components/tools/Input.vue";
 import Snackbar from "@/components/Snackbar.vue";
+import { EMAIL_REGEX } from "../constants";
 
 export default defineComponent({
   name: "Login",
   setup() {
+    const store = useStore();
     const email = ref("");
     const password = ref("");
     const { login } = useActions(["login"]);
     function handleLogin(): void {
-      login({
-        email: email.value,
-        password: password.value,
-      });
+      if (!email.value.match(EMAIL_REGEX)) {
+        console.log("to nie jest email");
+        store.commit("setSnackbar", {
+          message: "Niewłaściwy adres email",
+          variant: "error",
+        });
+      } else {
+        login({
+          email: email.value,
+          password: password.value,
+        });
+      }
     }
 
     return { email, password, handleLogin };

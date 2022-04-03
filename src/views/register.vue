@@ -1,12 +1,19 @@
 <template>
   <main class="wrapper">
+    <Snackbar />
     <div class="login">
       <h1 class="login__title primary--text">Załóż konto</h1>
-      <div class="login__form">
-        <Input placeholder="Login" width="341px" v-model="email" />
-        <Input placeholder="Hasło" width="341px" v-model="password" />
+      <form @submit.prevent class="login__form">
+        <Input placeholder="Email" type="email" width="341px" v-model="email" />
+        <Input
+          placeholder="Hasło"
+          type="password"
+          width="341px"
+          v-model="password"
+        />
         <Input
           placeholder="Potwierdź hasło"
+          type="password"
           width="341px"
           v-model="passwordRepeat"
         />
@@ -17,7 +24,7 @@
         >
           Załóż konto
         </Button>
-      </div>
+      </form>
       <p class="login__register">
         <span class="login__text gray--text">Masz już konto?</span>
         <span class="login__link primary--text" @click="$router.push('/login')">
@@ -38,29 +45,43 @@
 </template>
 
 <script lang="ts">
+import { useStore } from "vuex";
 import { createNamespacedHelpers } from "vuex-composition-helpers";
 const { useActions } = createNamespacedHelpers("user");
 import { defineComponent, ref } from "vue";
 import Button from "@/components/tools/Button.vue";
 import Input from "@/components/tools/Input.vue";
+import Snackbar from "@/components/Snackbar.vue";
+import { EMAIL_REGEX } from "../constants";
 
 export default defineComponent({
   name: "Register",
   setup() {
+    const store = useStore();
     const email = ref("");
     const password = ref("");
     const passwordRepeat = ref("");
     const { createUser } = useActions(["createUser"]);
 
     function handleRegistration(): void {
-      if (password.value === passwordRepeat.value) {
-        createUser({
-          email: email.value,
-          password: password.value,
+      if (!email.value.match(EMAIL_REGEX)) {
+        store.commit("setSnackbar", {
+          message: "Niewłaściwy adres email",
+          variant: "error",
         });
-      } else {
-        console.error("Hasła muszą być takie same");
+        return;
       }
+      if (password.value !== passwordRepeat.value) {
+        store.commit("setSnackbar", {
+          message: "Hasła muszą być takie same",
+          variant: "error",
+        });
+        return;
+      }
+      createUser({
+        email: email.value,
+        password: password.value,
+      });
     }
 
     return { email, password, passwordRepeat, handleRegistration };
@@ -68,6 +89,7 @@ export default defineComponent({
   components: {
     Button,
     Input,
+    Snackbar,
   },
 });
 </script>

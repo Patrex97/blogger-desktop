@@ -47,8 +47,6 @@ export const user = {
         })
         .then(({ data }) => {
           if (data.error) {
-            console.log(data.error);
-
             commit(
               "setSnackbar",
               { message: data.error, variant: "error" },
@@ -71,14 +69,31 @@ export const user = {
         })
         .catch((e) => console.error(e));
     },
-    createUser(_: any, registerData: any) {
+    createUser({ commit }: any, registerData: any) {
       const { email, password } = registerData;
       axios
         .post("http://localhost:3000/user/register", {
           email,
           password,
         })
-        .catch((e) => console.error(e));
+        .then(({ data }) => {
+          commit(
+            "setSnackbar",
+            { message: "Konto zostało utworzone!", variant: "primary" },
+            { root: true }
+          );
+        })
+        .catch((e) => {
+          console.log("error", e);
+          commit(
+            "setSnackbar",
+            {
+              message: "Konto z takim adresem email już istanieje",
+              variant: "error",
+            },
+            { root: true }
+          );
+        });
     },
   },
 };
