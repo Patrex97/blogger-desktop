@@ -6,8 +6,11 @@
       </h2>
       <Dropdown v-model:open="templateDropdown">
         <template #activator>
-          <button @click="templateDropdown = !templateDropdown">
-            Szablony
+          <button
+            @click="templateDropdown = !templateDropdown"
+            class="dropdown__activator"
+          >
+            Szablony <span class="dropdown__arrow">V</span>
           </button>
         </template>
         <template #content>
@@ -327,6 +330,13 @@ export default defineComponent({
     },
     savePostTemplate() {
       const { content } = this.newPost;
+      if (!this.saveTemplateDialog.title) {
+        this.$store.commit("setSnackbar", {
+          message: "Nazwa szablonu jest wymagana",
+          variant: "error",
+        });
+        return;
+      }
       const contentList = content.map((part) => part.type);
       this.saveTemplate({ title: this.saveTemplateDialog.title, contentList });
       this.saveTemplateDialog.isOpen = false;
@@ -342,6 +352,7 @@ export default defineComponent({
         },
         content: [],
       };
+      this.templateDropdown = false;
       const componentList = content.split("-");
       if (componentList[0] !== "") {
         componentList.forEach((name) => this.addNewPart(name));
@@ -475,6 +486,21 @@ export default defineComponent({
       background-color: rgb(113, 90, 216);
       color: white;
     }
+  }
+  &__activator {
+    padding: 0.5rem 0.25rem;
+    font-weight: bold;
+    background-color: rgb(108, 135, 255);
+    border: 1px solid rgb(36, 186, 255);
+    border-radius: 6px;
+    &:hover {
+      background-color: rgb(5, 27, 155);
+      color: white;
+    }
+  }
+  &__arrow {
+    font-weight: 900;
+    margin-right: 0.25rem;
   }
 }
 </style>

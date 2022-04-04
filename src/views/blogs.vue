@@ -1,4 +1,5 @@
 <template>
+  <Snackbar />
   <div class="blogs__nav">
     <Button class="nav__button button--primary" @click="logout">Wyloguj</Button>
     <h1 class="nav__title">Moje blogi</h1>
@@ -17,6 +18,7 @@
       class="blog primary white--text"
     >
       <h2 class="blog__name">{{ blog.name }}</h2>
+      <p v-show="blog.url">{{ blog.url }}</p>
     </router-link>
     <template v-if="!userBlogs.length">
       <p>Nie masz żadnych blogów</p>
@@ -50,7 +52,7 @@
       <Button
         v-if="newBlogDialog.currentStep < 3"
         class="button--primary"
-        @click="newBlogDialog.currentStep++"
+        @click="nextStep"
       >
         Dalej
       </Button>
@@ -73,6 +75,8 @@ import { createNamespacedHelpers } from "vuex-composition-helpers";
 import Step1 from "@/components/dialogs/newBlog/Step1.vue";
 import Step2 from "@/components/dialogs/newBlog/Step2.vue";
 import Step3 from "@/components/dialogs/newBlog/Step3.vue";
+import Snackbar from "@/components/Snackbar.vue";
+import { useStore } from "vuex";
 const { useGetters: userGetters, useActions: userActions } =
   createNamespacedHelpers("user");
 const { useActions: blogActions } = createNamespacedHelpers("blog");
@@ -85,8 +89,10 @@ export default defineComponent({
     Step3,
     Button,
     Dialog,
+    Snackbar,
   },
   setup() {
+    const store = useStore();
     const { userBlogs } = userGetters(["userBlogs"]);
     const { logout } = userActions(["logout"]);
     const { createBlog } = blogActions(["createBlog"]);
@@ -111,12 +117,31 @@ export default defineComponent({
       newBlogDialog.isOpen = false;
     };
 
+    const nextStep = function () {
+      if (newBlogDialog.currentStep === 1 && !newBlog.name) {
+        store.commit("setSnackbar", {
+          message: "Pole nazwa bloga jest wymagane",
+          variant: "error",
+        });
+        return;
+      }
+      if (newBlogDialog.currentStep === 2 && !newBlog.url) {
+        store.commit("setSnackbar", {
+          message: "Pole URL jest wymagane",
+          variant: "error",
+        });
+        return;
+      }
+      newBlogDialog.currentStep++;
+    };
+
     return {
       newBlogDialog,
       newBlog,
       userBlogs,
       logout,
       createNewBlog,
+      nextStep,
     };
   },
 });

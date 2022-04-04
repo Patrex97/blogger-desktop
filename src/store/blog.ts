@@ -17,12 +17,11 @@ export const blog = {
   },
   actions: {
     createBlog({ dispatch }: any, newBlogData: any) {
-      const { name, title, tags } = newBlogData;
+      const { name, url } = newBlogData;
       axios
         .post("http://localhost:3000/blog/create", {
           name,
-          title,
-          tags,
+          url,
         })
         .then(() => {
           dispatch("user/fetchUserData", null, { root: true });

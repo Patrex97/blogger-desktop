@@ -53,6 +53,11 @@ import { EMAIL_REGEX } from "../constants";
 
 export default defineComponent({
   name: "Login",
+  components: {
+    Button,
+    Input,
+    Snackbar,
+  },
   setup() {
     const store = useStore();
     const email = ref("");
@@ -74,11 +79,6 @@ export default defineComponent({
     }
 
     return { email, password, handleLogin };
-  },
-  components: {
-    Button,
-    Input,
-    Snackbar,
   },
 });
 </script>

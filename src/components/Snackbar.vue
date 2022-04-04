@@ -65,6 +65,7 @@ export default {
   text-align: center;
   padding: 1rem 0;
   cursor: pointer;
+  z-index: 10;
   &--error {
     background-color: rgb(241, 54, 54);
   }
