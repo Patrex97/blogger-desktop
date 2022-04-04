@@ -3,7 +3,7 @@
     <Snackbar />
     <div class="login">
       <h1 class="login__title primary--text">Zaloguj się</h1>
-      <div class="login__form">
+      <form @submit.prevent="handleLogin" class="login__form">
         <Input placeholder="Email" type="email" width="341px" v-model="email" />
         <Input
           placeholder="Hasło"
@@ -14,11 +14,11 @@
         <Button
           class="login__button button--primary"
           width="341px"
-          @click="handleLogin"
+          type="submit"
         >
           Zaloguj się
         </Button>
-      </div>
+      </form>
       <p class="login__register">
         <span class="login__text gray--text">Nie masz konta?</span>
         <span

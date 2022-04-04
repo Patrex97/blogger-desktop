@@ -3,7 +3,7 @@
     <Snackbar />
     <div class="login">
       <h1 class="login__title primary--text">Załóż konto</h1>
-      <form @submit.prevent class="login__form">
+      <form @submit.prevent="handleRegistration" class="login__form">
         <Input placeholder="Email" type="email" width="341px" v-model="email" />
         <Input
           placeholder="Hasło"
@@ -20,7 +20,7 @@
         <Button
           class="login__button button--primary"
           width="341px"
-          @click="handleRegistration"
+          type="submit"
         >
           Załóż konto
         </Button>
@@ -97,7 +97,7 @@ export default defineComponent({
 <style lang="scss" scoped>
 .wrapper {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(2, 1fr);
   width: 100%;
   height: 100vh;
 }

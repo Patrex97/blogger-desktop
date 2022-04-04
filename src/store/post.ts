@@ -63,7 +63,7 @@ export const post = {
         })
         .catch((e) => console.error(e));
     },
-    addContent(_: any, postData: any): void {
+    addContent({ commit }: any, postData: any): void {
       const { postId, content } = postData;
       content.forEach((part: any, index: number) => {
         const { type, content } = part;
@@ -84,9 +84,17 @@ export const post = {
           .post("http://localhost:3000/content/add", formData)
           .catch((e) => console.error(e));
       });
+      commit(
+        "setSnackbar",
+        {
+          message: "Post został utworzony",
+          variant: "primary",
+        },
+        { root: true }
+      );
     },
     updatePost({ state, dispatch, rootState }: any, updatePostData: any): void {
-      const { title, featuredImage, content } = updatePostData;
+      const { title, featuredImage } = updatePostData;
       const postData = new FormData();
       postData.append("title", title);
       postData.append("blogId", rootState.blog.blog.id);
@@ -100,12 +108,20 @@ export const post = {
         })
         .catch((e) => console.error(e));
     },
-    replacePostContent({ state, dispatch }: any, updatePostData: any) {
+    replacePostContent({ state, commit, dispatch }: any, updatePostData: any) {
       const { content } = updatePostData;
       axios
         .delete(`http://localhost:3000/content/${state.post?.id}`)
         .then(({ data }) => {
           if (data) {
+            commit(
+              "setSnackbar",
+              {
+                message: "Post został zaktualizowany",
+                variant: "primary",
+              },
+              { root: true }
+            );
             dispatch("addContent", {
               postId: state.post?.id,
               content,

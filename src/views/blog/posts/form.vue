@@ -11,6 +11,9 @@
           </button>
         </template>
         <template #content>
+          <p v-show="!templates.length" class="dropdown__placeholder">
+            Nie masz żadnych szablonów
+          </p>
           <p
             v-for="template in templates"
             :key="template.id"
@@ -77,7 +80,7 @@
         </div>
       </div>
       <Button @click="openNewPartDialog" width="100%" class="button--primary">
-        Dodaj element
+        Dodaj nową treść
       </Button>
     </form>
     <div class="form__buttons">
@@ -258,6 +261,21 @@ export default defineComponent({
       this.editForm = true;
     },
     handleSubmit() {
+      const { title, content } = this.newPost;
+      if (!title) {
+        this.$store.commit("setSnackbar", {
+          message: "Post musi mieć tytuł",
+          variant: "error",
+        });
+        return;
+      }
+      if (!content.length) {
+        this.$store.commit("setSnackbar", {
+          message: "Post musi mieć jakąś treść",
+          variant: "error",
+        });
+        return;
+      }
       if (this.editForm) {
         this.updatePost(this.newPost);
       } else {
@@ -440,6 +458,10 @@ export default defineComponent({
     &:hover {
       background-color: rgb(224, 221, 238);
     }
+  }
+  &__placeholder {
+    padding: 0.5rem;
+    width: max-content;
   }
   &__button {
     cursor: pointer;

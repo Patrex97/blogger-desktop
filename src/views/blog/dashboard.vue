@@ -1,7 +1,8 @@
 <template>
   <div class="dashboard">
-    <h2 class="dashboard__title">Posts</h2>
+    <h2 class="dashboard__title">Posty</h2>
     <Preview v-for="post in posts" :key="post.id" :post="post" />
+    <p v-show="!posts.length">Nie masz żadnych postów</p>
   </div>
 </template>
 

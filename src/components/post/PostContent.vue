@@ -3,13 +3,21 @@
     <h2 v-if="!variant">Podgląd nowego posta</h2>
     <div class="post-preview__header">
       <img
-        v-if="variant"
+        v-if="variant && post.featuredImage"
         class="post-preview__image"
         :src="getImage(post.featuredImage)"
         alt=""
       />
-      <IMAGE v-else :content="post.featuredImage" />
-      <h2 class="post-preview__title">{{ post.title }}</h2>
+      <IMAGE
+        v-if="!variant && post.featuredImage"
+        :content="post.featuredImage"
+      />
+      <h2
+        class="post-preview__title"
+        :class="{ 'post-preview__title--simple': !post.featuredImage }"
+      >
+        {{ post.title }}
+      </h2>
     </div>
     <component
       v-for="part in filteredPostParts"
@@ -61,6 +69,7 @@ export default defineComponent({
   gap: 1.5rem;
   &__header {
     position: relative;
+    margin-top: 2rem;
   }
   &__title {
     position: absolute;
@@ -71,6 +80,11 @@ export default defineComponent({
     font-size: 3rem;
     padding: 0.5rem 1rem;
     background-color: rgba(0, 0, 0, 0.4);
+    &--simple {
+      position: static;
+      color: black !important;
+      background: none !important;
+    }
   }
   &__image {
     width: 100%;

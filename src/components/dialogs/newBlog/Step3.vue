@@ -2,7 +2,7 @@
   <p v-bind="$attrs">Twój blog zostanie utworzony z następującymi danymi</p>
   <div class="dialog__summary">
     <h3>{{ newBlog.name }}</h3>
-    <p>{{ `https:/theBestBlog.test/${newBlog.url}` }}</p>
+    <p>{{ `https:/theBestBlog.test/${newBlog.url.replace(" ", "-")}` }}</p>
   </div>
 </template>
 
