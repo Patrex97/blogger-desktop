@@ -18,7 +18,7 @@ export const template = {
   actions: {
     saveTemplate({ dispatch }: any, templateData: any) {
       axios
-        .post("http://localhost:3000/template/save", templateData)
+        .post("https://thesis-blogger-backend.herokuapp.com/template/save", templateData)
         .then(({ data }) => {
           if (data?.id) {
             dispatch("fetchTemplates");
@@ -28,7 +28,7 @@ export const template = {
     },
     removeTemplate({ dispatch }: any, id: any) {
       axios
-        .delete(`http://localhost:3000/template/${id}`)
+        .delete(`https://thesis-blogger-backend.herokuapp.com/template/${id}`)
         .then(({ data }) => {
           if (data) {
             dispatch("fetchTemplates");
@@ -38,7 +38,7 @@ export const template = {
     },
     fetchTemplates({ commit }: any) {
       axios
-        .get("http://localhost:3000/template")
+        .get("https://thesis-blogger-backend.herokuapp.com/template")
         .then(({ data }) => {
           commit("settemplates", data);
         })

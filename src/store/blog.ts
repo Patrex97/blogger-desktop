@@ -19,7 +19,7 @@ export const blog = {
     createBlog({ dispatch }: any, newBlogData: any) {
       const { name, url } = newBlogData;
       axios
-        .post("http://localhost:3000/blog/create", {
+        .post("https://thesis-blogger-backend.herokuapp.com/blog/create", {
           name,
           url,
         })
@@ -30,7 +30,7 @@ export const blog = {
     },
     fetchBlogData({ commit }: any, id: any) {
       axios
-        .get(`http://localhost:3000/blog/${id}`)
+        .get(`https://thesis-blogger-backend.herokuapp.com/blog/${id}`)
         .then((response) => {
           commit("setBlog", response.data);
         })

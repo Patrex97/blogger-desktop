@@ -16,7 +16,7 @@ export function getImagePath(image: string | Image): string {
 }
 
 export function getImage(fileName: string): string {
-  return fileName && `http://localhost:3000/file/${fileName}`;
+  return fileName && `https://thesis-blogger-backend.herokuapp.com/file/${fileName}`;
 }
 
 export function getComponentName(componentName: ContentType): string {

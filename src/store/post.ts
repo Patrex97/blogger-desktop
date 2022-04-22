@@ -26,7 +26,7 @@ export const post = {
   actions: {
     fetchPostData({ commit }: any, postId: string): void {
       axios
-        .get(`http://localhost:3000/post/findOne/${postId}`)
+        .get(`https://thesis-blogger-backend.herokuapp.com/post/findOne/${postId}`)
         .then(({ data }) => {
           const resultPost = {
             ...data,
@@ -41,7 +41,7 @@ export const post = {
     },
     fetchBlogPosts({ commit }: any, blogId: string): void {
       axios
-        .get(`http://localhost:3000/post/findAll/${blogId}`)
+        .get(`https://thesis-blogger-backend.herokuapp.com/post/findAll/${blogId}`)
         .then((response) => {
           commit("setPosts", response.data);
         })
@@ -54,7 +54,7 @@ export const post = {
       postData.append("blogId", rootState.blog.blog.id);
       postData.append("featuredImage", featuredImage.file);
       axios
-        .post("http://localhost:3000/post/create", postData)
+        .post("https://thesis-blogger-backend.herokuapp.com/post/create", postData)
         .then(({ data }) => {
           dispatch("addContent", {
             postId: data.id,
@@ -81,7 +81,7 @@ export const post = {
         }
         formData.append("order", (index + 1).toString());
         axios
-          .post("http://localhost:3000/content/add", formData)
+          .post("https://thesis-blogger-backend.herokuapp.com/content/add", formData)
           .catch((e) => console.error(e));
       });
       commit(
@@ -100,7 +100,7 @@ export const post = {
       postData.append("blogId", rootState.blog.blog.id);
       postData.append("featuredImage", featuredImage.file);
       axios
-        .patch(`http://localhost:3000/post/${state.post?.id}`, postData)
+        .patch(`https://thesis-blogger-backend.herokuapp.com/post/${state.post?.id}`, postData)
         .then(({ data }) => {
           if (data) {
             dispatch("replacePostContent", updatePostData);
@@ -111,7 +111,7 @@ export const post = {
     replacePostContent({ state, commit, dispatch }: any, updatePostData: any) {
       const { content } = updatePostData;
       axios
-        .delete(`http://localhost:3000/content/${state.post?.id}`)
+        .delete(`https://thesis-blogger-backend.herokuapp.com/content/${state.post?.id}`)
         .then(({ data }) => {
           if (data) {
             commit(
@@ -132,7 +132,7 @@ export const post = {
     },
     deletePost({ rootState, dispatch }: any, postId: string): boolean {
       axios
-        .delete(`http://localhost:3000/post/${postId}`)
+        .delete(`https://thesis-blogger-backend.herokuapp.com/post/${postId}`)
         .then(({ data }) => {
           dispatch("fetchBlogPosts", rootState.blog.blog?.id);
           return data;

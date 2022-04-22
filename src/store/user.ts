@@ -6,6 +6,7 @@ export const user = {
   state: {
     user: null,
     token: null,
+    loading: false,
   },
   mutations: {
     setUser(state: any, payload: any) {
@@ -13,6 +14,9 @@ export const user = {
     },
     setToken(state: any, payload: string) {
       state.token = payload;
+    },
+    setLoading(state: any, payload: boolean) {
+      state.loading = payload;
     },
   },
   getters: {
@@ -28,20 +32,24 @@ export const user = {
     getToken(state: any) {
       return state.token;
     },
+    loading(state: any) {
+      return state.loading;
+    },
   },
   actions: {
     fetchUserData({ commit }: any): void {
       axios
-        .get("http://localhost:3000/user/data")
+        .get("https://thesis-blogger-backend.herokuapp.com/user/data")
         .then((response) => {
           commit("setUser", response.data);
         })
         .catch((e) => console.error(e));
     },
     login({ dispatch, commit }: any, loginData: any): void {
+      commit("setLoading", true);
       const { email, password } = loginData;
       axios
-        .post("http://localhost:3000/auth/login", {
+        .post("https://thesis-blogger-backend.herokuapp.com/auth/login", {
           email,
           password,
         })
@@ -57,11 +65,14 @@ export const user = {
           commit("setToken", data.token);
           router.push("/blogs");
         })
-        .catch((e) => console.error(e));
+        .catch((e) => console.error(e))
+        .finally(() => {
+          commit("setLoading", false);
+        });
     },
     logout({ commit }: any) {
       axios
-        .get("http://localhost:3000/auth/logout")
+        .get("https://thesis-blogger-backend.herokuapp.com/auth/logout")
         .then((response) => {
           commit("setUser", null);
           commit("setToken", null);
@@ -70,9 +81,10 @@ export const user = {
         .catch((e) => console.error(e));
     },
     createUser({ commit }: any, registerData: any) {
+      commit("setLoading", true);
       const { email, password } = registerData;
       axios
-        .post("http://localhost:3000/user/register", {
+        .post("https://thesis-blogger-backend.herokuapp.com/user/register", {
           email,
           password,
         })
@@ -93,6 +105,9 @@ export const user = {
             },
             { root: true }
           );
+        })
+        .finally(() => {
+          commit("setLoading", false);
         });
     },
   },

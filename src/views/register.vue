@@ -22,7 +22,13 @@
           width="341px"
           type="submit"
         >
-          Załóż konto
+          <span v-show="!loading">Załóż konto</span>
+          <img
+            v-show="loading"
+            class="login__loading"
+            src="@/assets/loading.gif"
+            alt=""
+          />
         </Button>
       </form>
       <p class="login__register">
@@ -47,7 +53,7 @@
 <script lang="ts">
 import { useStore } from "vuex";
 import { createNamespacedHelpers } from "vuex-composition-helpers";
-const { useActions } = createNamespacedHelpers("user");
+const { useActions, useGetters } = createNamespacedHelpers("user");
 import { defineComponent, ref } from "vue";
 import Button from "@/components/tools/Button.vue";
 import Input from "@/components/tools/Input.vue";
@@ -67,6 +73,7 @@ export default defineComponent({
     const password = ref("");
     const passwordRepeat = ref("");
     const { createUser } = useActions(["createUser"]);
+    const { loading } = useGetters(["loading"]);
 
     function handleRegistration(): void {
       if (!email.value.match(EMAIL_REGEX)) {
@@ -89,7 +96,7 @@ export default defineComponent({
       });
     }
 
-    return { email, password, passwordRepeat, handleRegistration };
+    return { email, password, loading, passwordRepeat, handleRegistration };
   },
 });
 </script>
@@ -132,6 +139,10 @@ export default defineComponent({
   &__link {
     font-weight: bold;
     cursor: pointer;
+  }
+  &__loading {
+    height: 1rem;
+    width: 1rem;
   }
 }
 

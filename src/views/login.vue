@@ -16,7 +16,13 @@
           width="341px"
           type="submit"
         >
-          Zaloguj się
+          <span v-show="!loading">Zaloguj się</span>
+          <img
+            v-show="loading"
+            class="login__loading"
+            src="@/assets/loading.gif"
+            alt=""
+          />
         </Button>
       </form>
       <p class="login__register">
@@ -43,7 +49,7 @@
 
 <script lang="ts">
 import { createNamespacedHelpers } from "vuex-composition-helpers";
-const { useActions } = createNamespacedHelpers("user");
+const { useActions, useGetters } = createNamespacedHelpers("user");
 import { defineComponent, ref } from "vue";
 import { useStore } from "vuex";
 import Button from "@/components/tools/Button.vue";
@@ -63,6 +69,7 @@ export default defineComponent({
     const email = ref("");
     const password = ref("");
     const { login } = useActions(["login"]);
+    const { loading } = useGetters(["loading"]);
     function handleLogin(): void {
       if (!email.value.match(EMAIL_REGEX)) {
         console.log("to nie jest email");
@@ -78,7 +85,7 @@ export default defineComponent({
       }
     }
 
-    return { email, password, handleLogin };
+    return { email, password, loading, handleLogin };
   },
 });
 </script>
@@ -106,6 +113,10 @@ export default defineComponent({
     line-height: 1.4;
     border-bottom: 5px solid #091f57;
     margin-bottom: 70px;
+  }
+  &__loading {
+    height: 1rem;
+    width: 1rem;
   }
   &__form {
     display: flex;
